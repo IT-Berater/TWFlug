@@ -33,7 +33,7 @@ public class Parameter {
 
 	private int refreshTime = 1000 * 60 * 5;
 
-	private int maxCount = 100;
+	private int maxCount = 50;
 
 	private int minCount = 0;
 

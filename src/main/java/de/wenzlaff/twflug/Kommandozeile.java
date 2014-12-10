@@ -33,26 +33,27 @@ public class Kommandozeile {
 		Option help = new Option("h", "help", false, "print help and exit");
 		options.addOption(help);
 
-		options.addOption("n", "no-gui", false, "display no GUI. Only logfile output");
+		options.addOption("n", "no-gui", false, "display no GUI. Only logfile output (default: false) ");
 
 		Option version = new Option("v", "version", false, "print the version information and exit");
 		options.addOption(version);
 
-		Option debug = new Option("d", "debug", false, "print debugging information");
+		Option debug = new Option("d", "debug", false, "print debugging information (default: false)");
 		options.addOption(debug);
 
-		options.addOption(OptionBuilder.withLongOpt("ip").withDescription("ip adress from DUMP1090").hasArg().create("i"));
-		options.addOption(OptionBuilder.withLongOpt("port").withDescription("port from DUMP1090").hasArg().create("p"));
+		options.addOption(OptionBuilder.withLongOpt("ip").withDescription("ip adress from DUMP1090 (default: 10.0.7.43)").hasArg().create("i"));
+		options.addOption(OptionBuilder.withLongOpt("port").withDescription("port from DUMP1090 (default: 30003)").hasArg().create("p"));
 
-		options.addOption(OptionBuilder.withLongOpt("max-count").withDescription("set max count value").hasArg().create("max"));
-		options.addOption(OptionBuilder.withLongOpt("min-count").withDescription("set min count value").hasArg().create("min"));
+		options.addOption(OptionBuilder.withLongOpt("max-count").withDescription("set max count value (default: 50)").hasArg().create("max"));
+		options.addOption(OptionBuilder.withLongOpt("min-count").withDescription("set min count value (default: 0) ").hasArg().create("min"));
 
-		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with").hasArg().create("width"));
-		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight").hasArg().create("height"));
+		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with (default: 600)").hasArg().create("width"));
+		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight (default: 600)").hasArg().create("height"));
 
-		options.addOption(OptionBuilder.withArgName("file").hasArg().withDescription("use given file for DUMP output").withLongOpt("outputfile").create("o"));
+		options.addOption(OptionBuilder.withArgName("file").hasArg().withDescription("use given file for DUMP output (default: flugdaten.log) ")
+				.withLongOpt("outputfile").create("o"));
 
-		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms").hasArg().create("r"));
+		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms (default: 5 Minuten)").hasArg().create("r"));
 
 		Parameter parameter = new Parameter();
 

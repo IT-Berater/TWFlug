@@ -25,6 +25,7 @@ public class Start {
 		if (parameter == null) {
 			return;
 		}
+		OSXAppearance.applyIfApplicable();
 
 		try {
 			Client client = new Client();

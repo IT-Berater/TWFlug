@@ -59,7 +59,7 @@ public class Util {
 		// Speichern der Daten in eine Datei im Format:
 		// 2014-01-31_15:12:00 flugdaten anzahl: 12
 		String zeitstempel = getZeitstempel();
-		String zeile = zeitstempel + " flugdaten anzahl:" + flugzeuge.getMaxAnzahlFlugzeuge() + System.getProperty("line.separator");
+		String zeile = zeitstempel + " flugdaten anzahl: " + flugzeuge.getMaxAnzahlFlugzeuge() + System.getProperty("line.separator");
 
 		try {
 			FileUtils.writeStringToFile(outputDatei, zeile, true);
