@@ -1,7 +1,10 @@
 package de.wenzlaff.twflug.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GradientPaint;
+import java.awt.Point;
 import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
@@ -9,6 +12,7 @@ import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.dial.DialBackground;
 import org.jfree.chart.plot.dial.DialPlot;
 import org.jfree.chart.plot.dial.DialPointer;
 import org.jfree.chart.plot.dial.DialTextAnnotation;
@@ -16,6 +20,8 @@ import org.jfree.chart.plot.dial.DialValueIndicator;
 import org.jfree.chart.plot.dial.StandardDialFrame;
 import org.jfree.chart.plot.dial.StandardDialScale;
 import org.jfree.data.general.DefaultValueDataset;
+import org.jfree.ui.GradientPaintTransformType;
+import org.jfree.ui.StandardGradientPaintTransformer;
 
 import de.wenzlaff.twflug.be.Parameter;
 
@@ -61,6 +67,11 @@ public class HauptFenster {
 		this.plot.addLayer(wert);
 
 		this.plot.addLayer(new DialPointer.Pointer());
+
+		GradientPaint graPaint = new GradientPaint(new Point(), new Color(255, 255, 255), new Point(), new Color(170, 170, 220));
+		DialBackground background = new DialBackground(graPaint);
+		background.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
+		this.plot.setBackground(background);
 
 		StandardDialScale scale = new StandardDialScale(minimumValue, maximumValue, -120, -300, majorTickGap, majorTickGap - 1);
 		scale.setTickRadius(0.88);
