@@ -20,13 +20,13 @@ public class FlugInfosTest {
 		assertNotNull(flugInfo);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testAddNull() {
 		FieldDataRaw nachricht = null;
 		flugInfo.addNachricht(nachricht);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testAddOhneKey() {
 		FieldDataRaw nachricht = new FieldDataRaw();
 		flugInfo.addNachricht(nachricht);

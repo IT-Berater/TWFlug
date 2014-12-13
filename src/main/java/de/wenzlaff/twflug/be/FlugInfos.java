@@ -51,7 +51,7 @@ public class FlugInfos {
 
 	private boolean isNachrichtValid(final FieldDataRaw nachricht) {
 		// ohne key sind die Daten nicht vollständig
-		return nachricht.getHexIdent() == null || nachricht.getHexIdent().isEmpty();
+		return !(nachricht.getHexIdent() == null || nachricht.getHexIdent().isEmpty());
 	}
 
 	public int getMaxAnzahlFlugzeuge() {
