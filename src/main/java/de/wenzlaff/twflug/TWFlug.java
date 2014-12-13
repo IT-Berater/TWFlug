@@ -25,8 +25,9 @@ public class TWFlug {
 		if (parameter == null) {
 			return;
 		}
-		OSXAppearance.applyIfApplicable();
-
+		if (!parameter.isNoGui()) {
+			OSXAppearance.applyIfApplicable();
+		}
 		try {
 			Client client = new Client();
 			client.ausgabe(parameter);

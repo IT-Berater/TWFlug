@@ -89,10 +89,12 @@ public class Kommandozeile {
 			parameter.setCopyTime(line.getOptionValue("c"));
 
 			if (line.hasOption("d")) {
+				System.out.println("Starte " + ANWENDUNG_NAME + "" + ANWENDUNG_VERSION + " im Debug Modus ...");
 				parameter.setDebug(true);
 			}
 
 			if (line.hasOption("n")) {
+				System.out.println("Starte " + ANWENDUNG_NAME + "" + ANWENDUNG_VERSION + " ohne GUI ...");
 				parameter.setNoGui(true);
 			}
 			if (line.hasOption("k")) {

@@ -54,16 +54,17 @@ public class Client {
 
 	private FlugInfos flugzeuge = new FlugInfos();
 
-	private HauptFenster hauptFenster;
-
 	private Parameter parameter;
+
+	private HauptFenster hauptFenster;
 
 	void ausgabe(Parameter parameter) throws IOException {
 
 		this.parameter = parameter;
 
-		hauptFenster = new HauptFenster(parameter);
-
+		if (!parameter.isNoGui()) {
+			hauptFenster = new HauptFenster(parameter);
+		}
 		Socket socket = new Socket(parameter.getIp(), parameter.getPort());
 
 		resetFlugInfoTimer(parameter.getRefreshTime());
@@ -81,8 +82,9 @@ public class Client {
 
 			flugzeuge.addNachricht(fd);
 
-			hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
-
+			if (!parameter.isNoGui()) {
+				hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
+			}
 		}
 	}
 
@@ -97,12 +99,14 @@ public class Client {
 	}
 
 	private void resetFlugInfoTimer(int ms) {
+
 		Timer timer = new Timer();
 		// in einer Minute und dann jede 5 Minute, run() aufrufen
 		timer.schedule(new WriteAction(flugzeuge, parameter), DELAY, ms);
 	}
 
 	private void startCopyTimer() {
+
 		Timer timer = new Timer();
 		timer.schedule(new CopyAction(), DELAY, 10000);
 	}

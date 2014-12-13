@@ -24,24 +24,28 @@ public class FlugInfos {
 
 	public void addNachricht(final FieldDataRaw nachricht) {
 
-		if (nachricht == null) {
-			throw new IllegalArgumentException("Es muss eine Nachricht zum hinzufügen übergeben werden.");
-		}
+		if (nachricht != null) {
 
-		if (isNachrichtValid(nachricht)) {
-			throw new IllegalArgumentException("Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden");
-		}
+			if (isNachrichtValid(nachricht)) {
 
-		// testen ob Key schon vorhanden
-		String key = nachricht.getHexIdent();
-		if (flugInfos.containsKey(key)) {
-			List<FieldDataRaw> satz = flugInfos.get(key);
-			satz.add(nachricht);
+				// testen ob Key schon vorhanden
+				String key = nachricht.getHexIdent();
+				if (flugInfos.containsKey(key)) {
+					List<FieldDataRaw> satz = flugInfos.get(key);
+					satz.add(nachricht);
+				} else {
+					// nicht vorhanden
+					List<FieldDataRaw> satz = new ArrayList<FieldDataRaw>();
+					satz.add(nachricht);
+					flugInfos.put(key, satz);
+				}
+			} else {
+				System.out
+						.println("Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden. Fehlerhafte Nachricht: "
+								+ nachricht);
+			}
 		} else {
-			// nicht vorhanden
-			List<FieldDataRaw> satz = new ArrayList<FieldDataRaw>();
-			satz.add(nachricht);
-			flugInfos.put(key, satz);
+			System.out.println("Es muss eine Nachricht zum hinzufügen übergeben werden. Nachricht = null");
 		}
 	}
 
