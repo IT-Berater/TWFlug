@@ -59,8 +59,11 @@ public class Kommandozeile {
 
 		options.addOption(OptionBuilder.withLongOpt("copy-time").withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
 
-		Option isCopy = new Option("k", "copy", false, "copy output file to destination (default: false)");
-		options.addOption(isCopy);
+		options.addOption("k", "copy", false, "copy output file to destination (default: false)");
+		// TODO: deflault Adresse raus
+		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination (default: 10.0.7.23)").hasArg().create("ip"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("user"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("psw"));
 
 		Parameter parameter = new Parameter();
 

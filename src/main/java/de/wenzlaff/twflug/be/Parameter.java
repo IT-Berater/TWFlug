@@ -15,6 +15,7 @@ public class Parameter {
 	/**
 	 * Die IP Adresse an der gelauscht wird.
 	 */
+	// TODO: entfernen
 	private String ip = "10.0.7.43";
 
 	/**
@@ -236,6 +237,36 @@ public class Parameter {
 		}
 	}
 
+	public String getZielIp() {
+		return zielIp;
+	}
+
+	public void setZielIp(String zielIp) {
+		if (zielIp != null) {
+			this.zielIp = zielIp;
+		}
+	}
+
+	public String getZielUser() {
+		return zielUser;
+	}
+
+	public void setZielUser(String zielUser) {
+		if (zielUser != null) {
+			this.zielUser = zielUser;
+		}
+	}
+
+	public String getZielPasswort() {
+		return zielPasswort;
+	}
+
+	public void setZielPasswort(String zielPasswort) {
+		if (zielPasswort != null) {
+			this.zielPasswort = zielPasswort;
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -263,12 +294,12 @@ public class Parameter {
 		}
 		builder.append("refreshTime=");
 		builder.append(refreshTime);
-		builder.append(", copyTime=");
-		builder.append(copyTime);
 		builder.append(", maxCount=");
 		builder.append(maxCount);
 		builder.append(", minCount=");
 		builder.append(minCount);
+		builder.append(", copyTime=");
+		builder.append(copyTime);
 		builder.append(", isCopy=");
 		builder.append(isCopy);
 		builder.append(", ");
@@ -276,6 +307,20 @@ public class Parameter {
 			builder.append("zielDatei=");
 			builder.append(zielDatei);
 			builder.append(", ");
+		}
+		if (zielIp != null) {
+			builder.append("zielIp=");
+			builder.append(zielIp);
+			builder.append(", ");
+		}
+		if (zielUser != null) {
+			builder.append("zielUser=");
+			builder.append(zielUser);
+			builder.append(", ");
+		}
+		if (zielPasswort != null) {
+			builder.append("zielPasswort=");
+			builder.append(zielPasswort);
 		}
 		builder.append("]");
 		return builder.toString();
