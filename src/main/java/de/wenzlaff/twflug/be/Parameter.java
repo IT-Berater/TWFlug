@@ -22,20 +22,41 @@ public class Parameter {
 	 */
 	private int port = 30003;
 
+	/** Die Fenster Breite in Pixel der Anwendung. */
 	private int breite = 600;
+	/** Die Fenster Höhe in Pixel der Anwendung. */
 	private int hoehe = 600;
 
+	/** Wenn true, dann Debug Modus, zeigt mehr Infos an. */
 	private boolean isDebug;
 
+	/** Wenn true, wird keine GUI angezeigt. */
 	private boolean isNoGui;
 
-	private File outputDatei = new File("flugdaten.log");
+	/** Die Ausgabedatei mit dem Ergebnis bzw. der Anzahl der Flugzeuge. */
+	private File outputDatei;
 
+	/** Die Refresch Zeit für das schreiben der Daten in die Übergabe Datei in ms. */
 	private int refreshTime = 1000 * 60 * 5;
 
+	/** Die maximal angezeigten Flugzeuge in der GUI. */
 	private int maxCount = 50;
 
+	/** Die minimal angezeigten Flugzeuge in der GUI. Startet normalerweise mit 0. */
 	private int minCount = 0;
+
+	/** Die Zeit des Intervalls im ms, nach dem die Datendatei geschrieben wird. */
+	private int copyTime = 1000 * 60 * 60;
+
+	/** Wenn true, wird die Ausgabedatei auf ein neues Ziel kopiert. */
+	private boolean isCopy;
+
+	/** Der Zieldatei Name wenn kopiert wird. */
+	private File zielDatei;
+
+	private String zielIp;
+	private String zielUser;
+	private String zielPasswort;
 
 	public Parameter() {
 		super();
@@ -179,6 +200,42 @@ public class Parameter {
 		}
 	}
 
+	public int getCopyTime() {
+		return copyTime;
+	}
+
+	public void setCopyTime(String copyTime) {
+		if (copyTime != null) {
+			this.copyTime = Integer.valueOf(copyTime);
+		}
+	}
+
+	public void setCopyTime(int copyTime) {
+		this.copyTime = copyTime;
+	}
+
+	public boolean isCopy() {
+		return isCopy;
+	}
+
+	public void setCopy(boolean isCopy) {
+		this.isCopy = isCopy;
+	}
+
+	public File getZielDatei() {
+		return zielDatei;
+	}
+
+	public void setZielDatei(File zielDatei) {
+		this.zielDatei = zielDatei;
+	}
+
+	public void setZielDatei(String zielDatei) {
+		if (zielDatei != null) {
+			this.zielDatei = new File(zielDatei);
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -206,10 +263,20 @@ public class Parameter {
 		}
 		builder.append("refreshTime=");
 		builder.append(refreshTime);
+		builder.append(", copyTime=");
+		builder.append(copyTime);
 		builder.append(", maxCount=");
 		builder.append(maxCount);
 		builder.append(", minCount=");
 		builder.append(minCount);
+		builder.append(", isCopy=");
+		builder.append(isCopy);
+		builder.append(", ");
+		if (zielDatei != null) {
+			builder.append("zielDatei=");
+			builder.append(zielDatei);
+			builder.append(", ");
+		}
 		builder.append("]");
 		return builder.toString();
 	}

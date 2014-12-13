@@ -17,7 +17,7 @@ import de.wenzlaff.twflug.be.Parameter;
  * 
  * If you put that line into /etc/profile (or ~/.bashrc) it'll set it automatically at startup / when you log in.
  */
-public class Start {
+public class TWFlug {
 
 	public static void main(String[] args) {
 

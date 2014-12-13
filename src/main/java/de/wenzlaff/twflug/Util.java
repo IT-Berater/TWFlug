@@ -55,6 +55,18 @@ public class Util {
 		return d;
 	}
 
+	public static File getOutputDatei() {
+		// Format für Fhem. Jeden Monat eine neue Datei:
+		// flugdaten-%Y-%m.log
+		// z.B.
+		// flugdaten-2014-02.log
+		SimpleDateFormat df = new SimpleDateFormat("YYYY-MM");
+		Date d = new Date(System.currentTimeMillis());
+		String pfad = "flugdaten-" + df.format(d) + ".log";
+		File dateiname = new File(pfad);
+		return dateiname;
+	}
+
 	public static void writeFlugdaten(FlugInfos flugzeuge, File outputDatei) {
 		// Speichern der Daten in eine Datei im Format:
 		// 2014-01-31_15:12:00 flugdaten anzahl: 12
@@ -63,6 +75,7 @@ public class Util {
 
 		try {
 			FileUtils.writeStringToFile(outputDatei, zeile, true);
+			System.out.println("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FlugInfos;
@@ -48,7 +47,10 @@ import de.wenzlaff.twflug.gui.HauptFenster;
  * @since 11.11.2014
  * 
  */
-public class Client extends TimerTask {
+public class Client {
+
+	/** 1 Minute Verzögerungszeit in ms. */
+	private static final int DELAY = 1000 * 60;
 
 	private FlugInfos flugzeuge = new FlugInfos();
 
@@ -65,6 +67,8 @@ public class Client extends TimerTask {
 		Socket socket = new Socket(parameter.getIp(), parameter.getPort());
 
 		resetFlugInfoTimer(parameter.getRefreshTime());
+
+		startCopyTimer();
 
 		while (true) {
 			// lese Daten vom DUMP1090 Server, jede empfangene Nachricht
@@ -94,15 +98,13 @@ public class Client extends TimerTask {
 
 	private void resetFlugInfoTimer(int ms) {
 		Timer timer = new Timer();
-		// in einer Minute und dann jede Minute, run() aufrufen
-		timer.schedule(this, ms, ms);
+		// in einer Minute und dann jede 5 Minute, run() aufrufen
+		timer.schedule(new WriteAction(flugzeuge, parameter), DELAY, ms);
 	}
 
-	@Override
-	public void run() {
-
-		Util.writeFlugdaten(flugzeuge, parameter.getOutputDatei());
-		flugzeuge.setMaxAnzahlFlugzeugeAufNull();
+	private void startCopyTimer() {
+		Timer timer = new Timer();
+		timer.schedule(new CopyAction(), DELAY, 10000);
 	}
 
 }

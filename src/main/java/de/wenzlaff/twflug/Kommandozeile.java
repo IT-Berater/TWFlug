@@ -50,10 +50,15 @@ public class Kommandozeile {
 		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with (default: 600)").hasArg().create("width"));
 		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight (default: 600)").hasArg().create("height"));
 
-		options.addOption(OptionBuilder.withArgName("file").hasArg().withDescription("use given file for DUMP output (default: flugdaten.log) ")
+		options.addOption(OptionBuilder.withArgName("file").hasArg().withDescription("use given file for DUMP output (default: flugdaten-YYYY-MM.log) ")
 				.withLongOpt("outputfile").create("o"));
 
-		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms (default: 5 Minuten)").hasArg().create("r"));
+		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms (default: 300000 ms = 5 Minuten)").hasArg().create("r"));
+
+		options.addOption(OptionBuilder.withLongOpt("copy-time").withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
+
+		Option isCopy = new Option("k", "copy", false, "copy output file to destination (default: false)");
+		options.addOption(isCopy);
 
 		Parameter parameter = new Parameter();
 
@@ -70,8 +75,18 @@ public class Kommandozeile {
 			parameter.setBreite(line.getOptionValue("width"));
 			parameter.setHoehe(line.getOptionValue("height"));
 
-			parameter.setOutputDatei(line.getOptionValue("o"));
+			// Ausgabe Datei setzen
+			if (line.hasOption("o")) {
+				// wenn Ausgabe Datei angegeben
+				parameter.setOutputDatei(line.getOptionValue("o"));
+			} else {
+				// default Ausgabe Datei
+				parameter.setOutputDatei(Util.getOutputDatei());
+			}
+
 			parameter.setRefreshTime(line.getOptionValue("r"));
+
+			parameter.setCopyTime(line.getOptionValue("c"));
 
 			if (line.hasOption("d")) {
 				parameter.setDebug(true);
@@ -79,6 +94,9 @@ public class Kommandozeile {
 
 			if (line.hasOption("n")) {
 				parameter.setNoGui(true);
+			}
+			if (line.hasOption("k")) {
+				parameter.setCopy(true);
 			}
 
 			if (line.hasOption("v")) {
