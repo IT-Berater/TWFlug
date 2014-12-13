@@ -480,7 +480,9 @@ public class FieldDataRaw {
 		try {
 			date = DATUMS_FORMAT_US.parse(datum);
 		} catch (ParseException e) {
-			System.out.println("Parse Error: " + datum);
+			// TODO: system out entfernen
+			System.out.println("Parse Error mit Datum (" + datum + ") deshalb so gefixt");
+			date = new Date();
 		}
 		return date;
 	}
