@@ -12,6 +12,7 @@
       <outputDirectory>/</outputDirectory>
       <includes>
          <include>twflug.jar</include>
+         <include>startTWFlug.sh</include>
       </includes>
     </fileSet>
     <fileSet>
