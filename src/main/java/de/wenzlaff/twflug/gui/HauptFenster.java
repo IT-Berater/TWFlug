@@ -25,6 +25,13 @@ import org.jfree.ui.StandardGradientPaintTransformer;
 
 import de.wenzlaff.twflug.be.Parameter;
 
+/**
+ * Das Hauptfenster der Anwendung.
+ * 
+ * @author Thomas Wenzlaff
+ * @version 0.1
+ * @since 11.12.2014
+ */
 public class HauptFenster {
 
 	private final JFrame frame = new JFrame();
@@ -33,7 +40,7 @@ public class HauptFenster {
 
 	private DialPlot plot;
 
-	private static boolean gui;
+	private static boolean isNoGui;
 
 	public void aktualisieren(int maxAnzahl) {
 		anzahlFlugzeuge = new DefaultValueDataset(maxAnzahl);
@@ -41,7 +48,8 @@ public class HauptFenster {
 	}
 
 	public HauptFenster(Parameter parameter) {
-		gui = parameter.isNoGui();
+
+		isNoGui = parameter.isNoGui();
 		this.frame.setPreferredSize(new Dimension(parameter.getBreite(), parameter.getHoehe()));
 		this.frame.add(this.buildDialPlot(parameter.getMinCount(), parameter.getMaxCount(), 10));
 		this.frame.pack();
@@ -52,7 +60,7 @@ public class HauptFenster {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				HauptFenster.this.frame.setVisible(!gui);
+				HauptFenster.this.frame.setVisible(!isNoGui);
 			}
 		});
 	}
@@ -61,6 +69,7 @@ public class HauptFenster {
 
 		this.plot = new DialPlot(anzahlFlugzeuge);
 		this.plot.setDialFrame(new StandardDialFrame());
+
 		// in der Mitte nur ganze Zahlen anzeigen
 		DialValueIndicator wert = new DialValueIndicator(0);
 		wert.getNumberFormat().setMinimumFractionDigits(0);
@@ -68,37 +77,24 @@ public class HauptFenster {
 
 		this.plot.addLayer(new DialPointer.Pointer());
 
+		// lila Hintergrund leicht verlaufend von oben
 		GradientPaint graPaint = new GradientPaint(new Point(), new Color(255, 255, 255), new Point(), new Color(170, 170, 220));
 		DialBackground background = new DialBackground(graPaint);
 		background.setGradientPaintTransformer(new StandardGradientPaintTransformer(GradientPaintTransformType.VERTICAL));
 		this.plot.setBackground(background);
 
+		// Skala
 		StandardDialScale scale = new StandardDialScale(minimumValue, maximumValue, -120, -300, majorTickGap, majorTickGap - 1);
 		scale.setTickRadius(0.88);
 		scale.setTickLabelOffset(0.20);
 		scale.setTickLabelFormatter(new DecimalFormat());
 		this.plot.addScale(0, scale);
 
+		// Label unten in der Mitte
 		DialTextAnnotation annotation1 = new DialTextAnnotation("Flugzeuge");
 		annotation1.setFont(new Font("Dialog", Font.BOLD, 16));
 		annotation1.setRadius(0.7);
 		this.plot.addLayer(annotation1);
-
-		// StandardDialRange range = new StandardDialRange(0.0, 50.0, Color.green);
-		// range.setInnerRadius(0.52);
-		// range.setOuterRadius(0.53);
-		// this.plot.addLayer(range);
-		//
-		// StandardDialRange range2 = new StandardDialRange(50.0, 80.0, Color.yellow);
-		// range2.setInnerRadius(0.52);
-		// range2.setOuterRadius(0.53);
-		// this.plot.addLayer(range2);
-		//
-		// StandardDialRange range3 = new StandardDialRange(80.0, 100.0, Color.red);
-		// range3.setInnerRadius(0.52);
-		// range3.setOuterRadius(0.53);
-		//
-		// this.plot.addLayer(range3);
 
 		ChartPanel chartPanel = new ChartPanel(new JFreeChart(this.plot));
 
