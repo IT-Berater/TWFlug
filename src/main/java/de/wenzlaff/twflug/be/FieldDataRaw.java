@@ -202,6 +202,10 @@ public class FieldDataRaw {
 	 */
 	private String isOnGround;
 
+	private static final SimpleDateFormat DATUMS_FORMAT_DE = new SimpleDateFormat("dd.MM.YY");
+
+	private static final DateFormat DATUMS_FORMAT_US = new SimpleDateFormat("yyyy/MM/dd");
+
 	public FieldDataRaw() {
 		super();
 	}
@@ -457,8 +461,7 @@ public class FieldDataRaw {
 	}
 
 	public String getDatumFormatiert(Date date) {
-		SimpleDateFormat sd = new SimpleDateFormat("dd.MM.YY");
-		return sd.format(date);
+		return DATUMS_FORMAT_DE.format(date);
 	}
 
 	public Date getMessageLogged() {
@@ -472,10 +475,10 @@ public class FieldDataRaw {
 	}
 
 	private Date parseDatum(String datum) {
-		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+
 		Date date = null;
 		try {
-			date = df.parse(datum);
+			date = DATUMS_FORMAT_US.parse(datum);
 		} catch (ParseException e) {
 			System.out.println("Parse Error: " + datum);
 		}

@@ -22,7 +22,9 @@ public class Kommandozeile {
 
 	private static final String ANWENDUNG_NAME = "TWFlug";
 	private static final String ANWENDUNG_VERSION = "0.0.1";
+	private static final String ANWENDUNG_UND_VERSION = ANWENDUNG_NAME + " " + ANWENDUNG_VERSION;
 
+	@SuppressWarnings("static-access")
 	public static Parameter parseCommandline(String[] args) {
 		// create the command line parser
 		CommandLineParser parser = new BasicParser();
@@ -89,12 +91,12 @@ public class Kommandozeile {
 			parameter.setCopyTime(line.getOptionValue("c"));
 
 			if (line.hasOption("d")) {
-				System.out.println("Starte " + ANWENDUNG_NAME + "" + ANWENDUNG_VERSION + " im Debug Modus ...");
+				System.out.println("Starte " + ANWENDUNG_UND_VERSION + " im Debug Modus ...");
 				parameter.setDebug(true);
 			}
 
 			if (line.hasOption("n")) {
-				System.out.println("Starte " + ANWENDUNG_NAME + "" + ANWENDUNG_VERSION + " ohne GUI ...");
+				System.out.println("Starte " + ANWENDUNG_UND_VERSION + " ohne GUI ...");
 				parameter.setNoGui(true);
 			}
 			if (line.hasOption("k")) {
@@ -102,7 +104,7 @@ public class Kommandozeile {
 			}
 
 			if (line.hasOption("v")) {
-				System.out.println(ANWENDUNG_NAME + " " + ANWENDUNG_VERSION);
+				System.out.println(ANWENDUNG_UND_VERSION);
 				return null;
 			}
 			if (line.hasOption("h")) {
@@ -111,7 +113,7 @@ public class Kommandozeile {
 			}
 
 			if (parameter.isDebug()) {
-				System.out.println("Starte " + ANWENDUNG_NAME + " mit Parameter: " + parameter);
+				System.out.println("Starte " + ANWENDUNG_UND_VERSION + " mit Parameter: " + parameter);
 			}
 
 		} catch (ParseException exp) {
