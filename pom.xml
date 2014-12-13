@@ -52,7 +52,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>TWFlug</finalName>
+		<finalName>twflug</finalName>
 		<plugins>
 
 			<!-- download source code in Eclipse, best practice -->

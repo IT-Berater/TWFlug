@@ -11,7 +11,7 @@
       <directory>${project.build.directory}</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
-         <include>TWFlug.jar</include>
+         <include>twflug.jar</include>
       </includes>
     </fileSet>
     <fileSet>
