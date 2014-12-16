@@ -2,6 +2,9 @@ package de.wenzlaff.twflug;
 
 import java.util.TimerTask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.wenzlaff.twflug.be.FlugInfos;
 import de.wenzlaff.twflug.be.Parameter;
 
@@ -14,6 +17,8 @@ import de.wenzlaff.twflug.be.Parameter;
  *
  */
 public class WriteAction extends TimerTask {
+
+	private static final Logger LOG = LogManager.getLogger(WriteAction.class.getName());
 
 	private FlugInfos flugzeuge;
 	private Parameter parameter;

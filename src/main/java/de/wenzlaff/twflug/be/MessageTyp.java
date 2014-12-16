@@ -1,16 +1,17 @@
 package de.wenzlaff.twflug.be;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Die Möglichen 6 Message Typen.
  * 
  * Message types
  * 
- * There are six message types - MSG, SEL, ID, AIR, STA, CLK. Most data from
- * aircraft is contained in the MSG lines whilst the other types are triggered
- * by user input or system settings.
+ * There are six message types - MSG, SEL, ID, AIR, STA, CLK. Most data from aircraft is contained in the MSG lines whilst the other types are triggered by user
+ * input or system settings.
  * 
- * The MSG data was inhibited with a five minute delay in BaseStation versions
- * prior to 1.2.3.145 but from this version onwards is in real time.
+ * The MSG data was inhibited with a five minute delay in BaseStation versions prior to 1.2.3.145 but from this version onwards is in real time.
  * 
  * @author Thomas Wenzlaff
  * @version 0.1
@@ -18,6 +19,8 @@ package de.wenzlaff.twflug.be;
  *
  */
 public class MessageTyp {
+
+	private static final Logger LOG = LogManager.getLogger(MessageTyp.class.getName());
 
 	// ID
 	//

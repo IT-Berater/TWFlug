@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Timer;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FlugInfos;
 import de.wenzlaff.twflug.be.Parameter;
@@ -48,6 +51,8 @@ import de.wenzlaff.twflug.gui.HauptFenster;
  * 
  */
 public class Client {
+
+	private static final Logger LOG = LogManager.getLogger(Client.class.getName());
 
 	/** 1 Minute Verzögerungszeit in ms. */
 	private static final int DELAY = 1000 * 60;

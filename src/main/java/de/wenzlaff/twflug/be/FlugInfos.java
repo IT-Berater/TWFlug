@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Die fachliche FlugInfo. Hält alle empfangene Nachichten.
  * 
@@ -12,6 +15,8 @@ import java.util.Map;
  *
  */
 public class FlugInfos {
+
+	private static final Logger LOG = LogManager.getLogger(FlugInfos.class.getName());
 
 	/** Die empfangenen FlugInfos. Key: hexIdent Key ist die ICAO oder auch HexIdent. */
 	private Map<String, List<FieldDataRaw>> flugInfos;

@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FlugInfos;
@@ -20,7 +22,13 @@ import de.wenzlaff.twflug.be.FlugInfos;
  */
 public class Util {
 
-	public static FieldDataRaw getFieldData(String empfangeneNachricht) {
+	private static final Logger LOG = LogManager.getLogger(Util.class.getName());
+
+	private static final SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("YYYY-MM-dd_HH:mm:ss");
+
+	private static final SimpleDateFormat DATE_FORMAT_YYYY_MM = new SimpleDateFormat("YYYY-MM");
+
+	public static FieldDataRaw getFieldData(final String empfangeneNachricht) {
 
 		// alle Komma separirten Felder aufteilen
 		String nachricht[] = empfangeneNachricht.split(",");
@@ -60,14 +68,13 @@ public class Util {
 		// flugdaten-%Y-%m.log
 		// z.B.
 		// flugdaten-2014-02.log
-		SimpleDateFormat df = new SimpleDateFormat("YYYY-MM");
 		Date d = new Date(System.currentTimeMillis());
-		String dateiName = "flugdaten-" + df.format(d) + ".log";
+		String dateiName = "flugdaten-" + DATE_FORMAT_YYYY_MM.format(d) + ".log";
 		File dateiname = new File(dateiName);
 		return dateiname;
 	}
 
-	public static void writeFlugdaten(FlugInfos flugzeuge, File outputDatei) {
+	public static void writeFlugdaten(final FlugInfos flugzeuge, final File outputDatei) {
 		// Speichern der Daten in eine Datei im Format:
 		// 2014-01-31_15:12:00 flugdaten anzahl: 12
 		String zeitstempel = getZeitstempel();
@@ -75,17 +82,18 @@ public class Util {
 
 		try {
 			FileUtils.writeStringToFile(outputDatei, zeile, true);
-			System.out.println("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+			if (LOG.isInfoEnabled()) {
+				LOG.info("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error("Fehler beim schreiben der Flugdaten.", e);
 		}
 	}
 
 	private static String getZeitstempel() {
 		// 2014-01-31_15:12:00
-		SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-dd_HH:mm:ss");
 		Date d = new Date(System.currentTimeMillis());
-		String zeitstempel = df.format(d);
+		String zeitstempel = DATE_FORMAT_UND_UHRZEIT.format(d);
 		return zeitstempel;
 	}
 

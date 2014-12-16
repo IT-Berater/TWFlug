@@ -17,6 +17,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
@@ -32,6 +35,8 @@ import de.wenzlaff.twflug.be.Parameter;
  *
  */
 public class ScpTo {
+
+	private static final Logger LOG = LogManager.getLogger(ScpTo.class.getName());
 
 	public static void copyFile(Parameter parameter) {
 

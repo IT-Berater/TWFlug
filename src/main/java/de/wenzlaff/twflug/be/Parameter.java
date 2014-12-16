@@ -2,6 +2,9 @@ package de.wenzlaff.twflug.be;
 
 import java.io.File;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Die Programm Parameter
  * 
@@ -12,6 +15,7 @@ import java.io.File;
  */
 public class Parameter {
 
+	private static final Logger LOG = LogManager.getLogger(Parameter.class.getName());
 	/**
 	 * Die IP Adresse an der gelauscht wird.
 	 */

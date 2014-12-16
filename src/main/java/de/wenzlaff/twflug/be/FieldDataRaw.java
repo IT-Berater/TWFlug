@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * FieldDataRaw sind 22 Felder getrennt durch Komma.
  * 
@@ -20,6 +23,8 @@ import java.util.Date;
  *
  */
 public class FieldDataRaw {
+
+	private static final Logger LOG = LogManager.getLogger(FieldDataRaw.class.getName());
 
 	/**
 	 * Flag das anzeigt ob das Flugzeug auf dem Boden ist.
