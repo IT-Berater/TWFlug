@@ -13,10 +13,11 @@ import java.util.Map;
  */
 public class FlugInfos {
 
-	/**
-	 * Die empfangenen FlugInfos. Key: hexIdent Key ist die ICAO oder auch HexIdent.
-	 */
+	/** Die empfangenen FlugInfos. Key: hexIdent Key ist die ICAO oder auch HexIdent. */
 	private Map<String, List<FieldDataRaw>> flugInfos;
+
+	/** Die Parmaeter. */
+	private Parameter parameter;
 
 	public FlugInfos() {
 		flugInfos = new HashMap<String, List<FieldDataRaw>>();
@@ -41,11 +42,11 @@ public class FlugInfos {
 				}
 			} else {
 				System.out
-						.println("Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden. Fehlerhafte Nachricht: "
+						.println("INFO: Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden und wird ignoriert. Die Fehlerhafte Nachricht: "
 								+ nachricht);
 			}
 		} else {
-			System.out.println("Es muss eine Nachricht zum hinzufügen übergeben werden. Nachricht = null");
+			System.out.println("INFO: Es muss eine Nachricht zum hinzufügen übergeben werden. Nachricht = null");
 		}
 	}
 
@@ -65,4 +66,9 @@ public class FlugInfos {
 	public void setMaxAnzahlFlugzeugeAufNull() {
 		flugInfos.clear();
 	}
+
+	public void setParameter(Parameter parameter) {
+		this.parameter = parameter;
+	}
+
 }

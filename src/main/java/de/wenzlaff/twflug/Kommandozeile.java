@@ -8,6 +8,8 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import de.wenzlaff.twflug.be.Parameter;
 
@@ -19,6 +21,8 @@ import de.wenzlaff.twflug.be.Parameter;
  * @since 11.11.2014
  */
 public class Kommandozeile {
+
+	private static final Logger LOG = LogManager.getLogger(Kommandozeile.class.getName());
 
 	private static final String ANWENDUNG_NAME = "TWFlug";
 	private static final String ANWENDUNG_VERSION = "0.0.1";
@@ -60,7 +64,7 @@ public class Kommandozeile {
 		options.addOption(OptionBuilder.withLongOpt("copy-time").withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
 
 		options.addOption("k", "copy", false, "copy output file to destination (default: false)");
-		// TODO: deflault Adresse raus
+		// TODO: default Adresse raus
 		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination (default: pi-home)").hasArg().create("ip"));
 		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("user"));
 		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("psw"));
@@ -154,6 +158,10 @@ public class Kommandozeile {
 
 			if (parameter.isDebug()) {
 				System.out.println("Starte " + ANWENDUNG_UND_VERSION + " mit Parameter: " + parameter);
+			}
+
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Starte " + ANWENDUNG_UND_VERSION + " mit Parameter: " + parameter);
 			}
 
 		} catch (ParseException exp) {

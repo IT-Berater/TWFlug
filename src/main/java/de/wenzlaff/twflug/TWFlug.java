@@ -2,6 +2,9 @@ package de.wenzlaff.twflug;
 
 import java.io.IOException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.wenzlaff.twflug.be.Parameter;
 
 /**
@@ -19,7 +22,12 @@ import de.wenzlaff.twflug.be.Parameter;
  */
 public class TWFlug {
 
+	/** Log4j2 siehe http://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration */
+	private static final Logger LOG = LogManager.getLogger(TWFlug.class.getName());
+
 	public static void main(String[] args) {
+
+		LOG.debug("Starte TWFlug");
 
 		Parameter parameter = Kommandozeile.parseCommandline(args);
 		if (parameter == null) {
@@ -32,8 +40,7 @@ public class TWFlug {
 			Client client = new Client();
 			client.ausgabe(parameter);
 		} catch (IOException e) {
-			System.out.println("Fehler beim Starten des Client: " + e.getMessage());
-			e.printStackTrace();
+			LOG.error("Fehler beim Starten des Client: " + e.getMessage());
 		}
 	}
 }

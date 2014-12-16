@@ -62,6 +62,8 @@ public class Client {
 
 		this.parameter = parameter;
 
+		flugzeuge.setParameter(parameter);
+
 		if (!parameter.isNoGui()) {
 			hauptFenster = new HauptFenster(parameter);
 		}
