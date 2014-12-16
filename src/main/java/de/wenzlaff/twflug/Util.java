@@ -62,8 +62,8 @@ public class Util {
 		// flugdaten-2014-02.log
 		SimpleDateFormat df = new SimpleDateFormat("YYYY-MM");
 		Date d = new Date(System.currentTimeMillis());
-		String pfad = "flugdaten-" + df.format(d) + ".log";
-		File dateiname = new File(pfad);
+		String dateiName = "flugdaten-" + df.format(d) + ".log";
+		File dateiname = new File(dateiName);
 		return dateiname;
 	}
 

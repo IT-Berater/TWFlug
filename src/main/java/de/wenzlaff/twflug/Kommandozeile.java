@@ -61,9 +61,11 @@ public class Kommandozeile {
 
 		options.addOption("k", "copy", false, "copy output file to destination (default: false)");
 		// TODO: deflault Adresse raus
-		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination (default: 10.0.7.23)").hasArg().create("ip"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination (default: pi-home)").hasArg().create("ip"));
 		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("user"));
 		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("psw"));
+		options.addOption(OptionBuilder.withArgName("ziel-datei").hasArg()
+				.withDescription("destination file name (default: /home/pi/fhem/log/flugdaten-YYYY-MM.log) ").withLongOpt("dest-file").create("d"));
 
 		Parameter parameter = new Parameter();
 
@@ -80,6 +82,31 @@ public class Kommandozeile {
 			parameter.setBreite(line.getOptionValue("width"));
 			parameter.setHoehe(line.getOptionValue("height"));
 
+			// Ziel Passwort nicht vorhanden setzen
+			if (line.hasOption("psw")) {
+				// wenn Passwort angegeben auch setzen
+				parameter.setZielPasswort(line.getOptionValue("psw"));
+			}
+
+			// Ziel User nicht vorhanden setzen
+			if (line.hasOption("user")) {
+				// wenn User angegeben auch setzen
+				parameter.setZielUser(line.getOptionValue("user"));
+			} else {
+				// default ziel User
+				parameter.setZielUser("pi");
+			}
+
+			// Ziel IP nicht vorhanden setzen
+			if (line.hasOption("ip")) {
+				// wenn Ausgabe Datei angegeben
+				parameter.setZielIp(line.getOptionValue("ip"));
+			} else {
+				// default ziel IP
+				// TODO anpassen
+				parameter.setZielIp("pi-home");
+			}
+
 			// Ausgabe Datei setzen
 			if (line.hasOption("o")) {
 				// wenn Ausgabe Datei angegeben
@@ -87,6 +114,16 @@ public class Kommandozeile {
 			} else {
 				// default Ausgabe Datei
 				parameter.setOutputDatei(Util.getOutputDatei());
+			}
+
+			// Ziel Datei setzen
+			if (line.hasOption("d")) {
+				// wenn Ausgabe Datei angegeben
+				parameter.setZielDatei(line.getOptionValue("d"));
+			} else {
+				// default Ziel Datei
+				String zielDatei = "/home/pi/fhem/log/" + Util.getOutputDatei();
+				parameter.setZielDatei(zielDatei);
 			}
 
 			parameter.setRefreshTime(line.getOptionValue("r"));

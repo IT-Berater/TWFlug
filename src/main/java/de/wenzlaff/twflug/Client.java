@@ -72,18 +72,24 @@ public class Client {
 		startCopyTimer();
 
 		while (true) {
-			// lese Daten vom DUMP1090 Server, jede empfangene Nachricht
-			String empfangeneNachricht = leseNachricht(socket);
 
-			FieldDataRaw fd = Util.getFieldData(empfangeneNachricht);
-			if (parameter.isDebug()) {
-				System.out.println(fd);
-			}
+			try {
+				// lese Daten vom DUMP1090 Server, jede empfangene Nachricht
+				String empfangeneNachricht = leseNachricht(socket);
 
-			flugzeuge.addNachricht(fd);
+				FieldDataRaw fd = Util.getFieldData(empfangeneNachricht);
+				if (parameter.isDebug()) {
+					System.out.println(fd);
+				}
 
-			if (!parameter.isNoGui()) {
-				hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
+				flugzeuge.addNachricht(fd);
+
+				if (!parameter.isNoGui()) {
+					hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
+				}
+			} catch (Exception e) {
+				System.err.println("Error in Message Loop. " + e.getLocalizedMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -101,14 +107,15 @@ public class Client {
 	private void resetFlugInfoTimer(int ms) {
 
 		Timer timer = new Timer();
-		// in einer Minute und dann jede 5 Minute, run() aufrufen
+		// nach DELAY (einer Minute) und dann jede ms (5 Minute), run() aufrufen
 		timer.schedule(new WriteAction(flugzeuge, parameter), DELAY, ms);
 	}
 
 	private void startCopyTimer() {
 
 		Timer timer = new Timer();
-		timer.schedule(new CopyAction(), DELAY, 10000);
+		// nach DELAY/2 (einer Minute/2) und dann jede ms (30 Minute), run() aufrufen
+		timer.schedule(new CopyAction(parameter), DELAY / 2, parameter.getCopyTime());
 	}
 
 }

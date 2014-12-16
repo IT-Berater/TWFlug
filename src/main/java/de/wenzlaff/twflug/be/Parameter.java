@@ -46,7 +46,7 @@ public class Parameter {
 	/** Die minimal angezeigten Flugzeuge in der GUI. Startet normalerweise mit 0. */
 	private int minCount = 0;
 
-	/** Die Zeit des Intervalls im ms, nach dem die Datendatei geschrieben wird. */
+	/** Die Zeit des Intervalls im ms, nach dem die Datendatei (Übergabedatei) auf das Zielsystem kopiert wird. */
 	private int copyTime = 1000 * 60 * 60;
 
 	/** Wenn true, wird die Ausgabedatei auf ein neues Ziel kopiert. */
@@ -55,9 +55,18 @@ public class Parameter {
 	/** Der Zieldatei Name wenn kopiert wird. */
 	private File zielDatei;
 
-	private String zielIp;
+	/** Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert. Da wo Fhem läuft. */
+	private String zielIp = "pi-home";
+	/** Der User für das kopieren auf das Zielsystem. */
 	private String zielUser;
+	/** Das Passwort zu dem Zieluser. */
 	private String zielPasswort;
+
+	/** Sichere Ath. über RSA bzw. SSH default nein. */
+	private boolean isSSH;
+
+	private File ssh_known_hosts;
+	private String ssh_id_rsa;
 
 	public Parameter() {
 		super();
@@ -267,6 +276,30 @@ public class Parameter {
 		}
 	}
 
+	public boolean isSSH() {
+		return isSSH;
+	}
+
+	public void setSSH(boolean isSSH) {
+		this.isSSH = isSSH;
+	}
+
+	public File getSsh_known_hosts() {
+		return ssh_known_hosts;
+	}
+
+	public void setSsh_known_hosts(File ssh_known_hosts) {
+		this.ssh_known_hosts = ssh_known_hosts;
+	}
+
+	public String getSsh_id_rsa() {
+		return ssh_id_rsa;
+	}
+
+	public void setSsh_id_rsa(String ssh_id_rsa) {
+		this.ssh_id_rsa = ssh_id_rsa;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -321,6 +354,19 @@ public class Parameter {
 		if (zielPasswort != null) {
 			builder.append("zielPasswort=");
 			builder.append(zielPasswort);
+			builder.append(", ");
+		}
+		builder.append("isSSH=");
+		builder.append(isSSH);
+		builder.append(", ");
+		if (ssh_known_hosts != null) {
+			builder.append("ssh_known_hosts=");
+			builder.append(ssh_known_hosts);
+			builder.append(", ");
+		}
+		if (ssh_id_rsa != null) {
+			builder.append("ssh_id_rsa=");
+			builder.append(ssh_id_rsa);
 		}
 		builder.append("]");
 		return builder.toString();
