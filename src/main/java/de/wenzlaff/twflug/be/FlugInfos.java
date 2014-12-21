@@ -12,7 +12,8 @@ import org.apache.logging.log4j.Logger;
  * Die fachliche FlugInfo. Hält alle empfangene Nachichten.
  * 
  * @author Thomas Wenzlaff
- *
+ * @version 0.1
+ * @since 21.12.2014
  */
 public class FlugInfos {
 
@@ -21,7 +22,7 @@ public class FlugInfos {
 	/** Die empfangenen FlugInfos. Key: hexIdent Key ist die ICAO oder auch HexIdent. */
 	private Map<String, List<FieldDataRaw>> flugInfos;
 
-	/** Die Parmaeter. */
+	/** Die Parameter. */
 	private Parameter parameter;
 
 	public FlugInfos() {
@@ -46,12 +47,15 @@ public class FlugInfos {
 					flugInfos.put(key, satz);
 				}
 			} else {
-				System.out
-						.println("INFO: Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden und wird ignoriert. Die Fehlerhafte Nachricht: "
-								+ nachricht);
+				if (parameter.isDebug()) {
+					LOG.info("INFO: Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden und wird ignoriert. Die Fehlerhafte Nachricht: "
+							+ nachricht);
+				}
 			}
 		} else {
-			System.out.println("INFO: Es muss eine Nachricht zum hinzufügen übergeben werden. Nachricht = null");
+			if (parameter.isDebug()) {
+				LOG.info("INFO: Es muss eine Nachricht zum hinzufügen übergeben werden. Nachricht = null");
+			}
 		}
 	}
 

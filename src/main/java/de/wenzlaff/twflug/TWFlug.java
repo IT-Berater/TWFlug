@@ -19,6 +19,10 @@ import de.wenzlaff.twflug.be.Parameter;
  * or
  * 
  * If you put that line into /etc/profile (or ~/.bashrc) it'll set it automatically at startup / when you log in.
+ * 
+ * @author Thomas Wenzlaff
+ * @version 0.1
+ * @since 21.12.2014
  */
 public class TWFlug {
 
@@ -27,7 +31,7 @@ public class TWFlug {
 
 	public static void main(String[] args) {
 
-		LOG.debug("Starte TWFlug");
+		LOG.debug("Starte TWFlug ...");
 
 		Parameter parameter = Kommandozeile.parseCommandline(args);
 		if (parameter == null) {
@@ -43,4 +47,5 @@ public class TWFlug {
 			LOG.error("Fehler beim Starten des Client: " + e.getMessage());
 		}
 	}
+
 }

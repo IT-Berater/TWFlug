@@ -1,15 +1,5 @@
 package de.wenzlaff.twflug;
 
-/**
- * This program will demonstrate the file transfer from local to remote.
- * $ CLASSPATH=.:../build javac ScpTo.java
- * $ CLASSPATH=.:../build java ScpTo file1 user@remotehost:file2
- * You will be asked passwd.
- * If everything works fine, a local file 'file1' will copied to
- * 'file2' on 'remotehost'.
- *
- * http://www.jcraft.com/
- */
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,15 +19,21 @@ import com.jcraft.jsch.UserInfo;
 import de.wenzlaff.twflug.be.Parameter;
 
 /**
- * flugdaten.log pi@pi-home:/home/pi/fhem/log/flugdaten.log
+ * Scp Copy von http://www.jcraft.com/.
  * 
  * @author Thomas Wenzlaff
- *
+ * @version 0.1
+ * @since 21.12.2014
  */
 public class ScpTo {
 
 	private static final Logger LOG = LogManager.getLogger(ScpTo.class.getName());
 
+	/**
+	 * Kopiert eine lokale Datei auf das Zielsystem per scp copy.
+	 * 
+	 * @param parameter
+	 */
 	public static void copyFile(Parameter parameter) {
 
 		File lokaleDatendatei = parameter.getOutputDatei();
@@ -47,15 +43,16 @@ public class ScpTo {
 		File zielDatei = parameter.getZielDatei();
 
 		// String khfile = "/home/pi/.ssh/known_hosts";
-		String khfile = "/Users/thomaswenzlaff/.ssh/known_hosts";
+		// String khfile = "/Users/thomaswenzlaff/.ssh/known_hosts";
 		// String identityfile = "/home/pi/.ssh/id_rsa";
-		String identityfile = "/Users/thomaswenzlaff/.ssh/id_rsa";
+		// String identityfile = "/Users/thomaswenzlaff/.ssh/id_rsa";
 
 		if (lokaleDatendatei != null && zielUser != null && passwort != null && host != null && zielDatei != null) {
 
-			System.out.println("Starte kopieren mit lokaleDatendatei=" + lokaleDatendatei + ", user=" + zielUser + ", passwort=" + passwort + ", host=" + host
-					+ ", zielDatei=" + zielDatei);
-
+			if (parameter.isDebug()) {
+				LOG.debug("Starte kopieren mit lokaleDatendatei=" + lokaleDatendatei + ", user=" + zielUser + ", passwort=" + passwort + ", host=" + host
+						+ ", zielDatei=" + zielDatei);
+			}
 			// [flugdaten-2014-12.log, pi@pi-home:/home/pi/fhem/log/flugdaten-2014-12.log]
 
 			FileInputStream fis = null;
@@ -107,7 +104,7 @@ public class ScpTo {
 				channel.connect();
 
 				if (checkAck(in) != 0) {
-					System.out.println("ERROR 1, kein kopieren erfolgt");
+					LOG.error("ERROR 1, kein kopieren erfolgt");
 					return;
 				}
 
@@ -121,7 +118,7 @@ public class ScpTo {
 					out.write(command.getBytes());
 					out.flush();
 					if (checkAck(in) != 0) {
-						System.out.println("ERROR 2, kein kopieren erfolgt");
+						LOG.error("ERROR 2, kein kopieren erfolgt");
 						return;
 					}
 				}
@@ -138,7 +135,7 @@ public class ScpTo {
 				out.write(command.getBytes());
 				out.flush();
 				if (checkAck(in) != 0) {
-					System.out.println("ERROR 3, kein kopieren erfolgt");
+					LOG.error("ERROR 3, kein kopieren erfolgt");
 					return;
 				}
 
@@ -158,26 +155,30 @@ public class ScpTo {
 				out.write(buf, 0, 1);
 				out.flush();
 				if (checkAck(in) != 0) {
-					System.out.println("ERROR 4, kein kopieren erfolgt");
+					LOG.error("ERROR 4, kein kopieren erfolgt");
 					return;
 				}
 				out.close();
 
 				channel.disconnect();
 				session.disconnect();
-				System.out.println("Ok, kopiert");
+				if (parameter.isDebug()) {
+					LOG.info("Ok, Datei " + parameter.getZielDatei() + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
+				}
 			} catch (Exception e) {
-				System.out.println(e);
+				LOG.error(e);
 				try {
 					if (fis != null)
 						fis.close();
 				} catch (Exception ee) {
 				}
 			}
-			System.out.println("OK, erfolgreich kopiert");
+			if (parameter.isDebug()) {
+				LOG.info("Ok, Datei " + parameter.getZielDatei() + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
+			}
 		} else {
-			System.out.println("Konnte Datei nicht kopieren, da ein Parameter null ist. lokaleDatendatei=" + lokaleDatendatei + ", zielUser=" + zielUser
-					+ ", passwort=" + passwort + ", host=" + host + ", zielDatei" + zielDatei);
+			LOG.error("Konnte Datei nicht kopieren, da ein Parameter null ist. lokaleDatendatei=" + lokaleDatendatei + ", zielUser=" + zielUser + ", passwort="
+					+ passwort + ", host=" + host + ", zielDatei" + zielDatei);
 		}
 	}
 
@@ -231,11 +232,11 @@ public class ScpTo {
 				c = in.read();
 				sb.append((char) c);
 			} while (c != '\n');
-			if (b == 1) { // error
-				System.out.print(sb.toString());
+			if (b == 1) {
+				LOG.error("Error" + sb.toString());
 			}
-			if (b == 2) { // fatal error
-				System.out.print(sb.toString());
+			if (b == 2) {
+				LOG.error("Fatal error" + sb.toString());
 			}
 		}
 		return b;

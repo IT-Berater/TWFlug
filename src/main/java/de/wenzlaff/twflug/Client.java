@@ -95,8 +95,7 @@ public class Client {
 					hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
 				}
 			} catch (Exception e) {
-				System.err.println("Error in Message Loop. " + e.getLocalizedMessage());
-				e.printStackTrace();
+				LOG.error("Error in Message loop. " + e.getLocalizedMessage(), e);
 			}
 		}
 	}

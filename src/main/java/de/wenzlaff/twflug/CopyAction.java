@@ -11,6 +11,8 @@ import de.wenzlaff.twflug.be.Parameter;
  * Klasse für das Kopieren per Scp auf das Zielsystem.
  * 
  * @author Thomas Wenzlaff
+ * @version 0.1
+ * @since 21.12.2014
  */
 public class CopyAction extends TimerTask {
 
@@ -28,7 +30,7 @@ public class CopyAction extends TimerTask {
 		try {
 			ScpTo.copyFile(parameter);
 		} catch (Exception e) {
-			System.out.println("Fehler beim kopieren auf den Zielhost." + e.getLocalizedMessage());
+			LOG.error("Fehler beim kopieren auf den Zielhost." + e.getLocalizedMessage(), e);
 		}
 	}
 

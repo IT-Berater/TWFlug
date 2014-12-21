@@ -29,6 +29,12 @@ import javax.imageio.ImageIO;
 
 /**
  * On OS X, sets the demo to have a dock icon and a name in the menu bar. On other operating systems does nothing.
+ * 
+ * Anpassungen von:
+ * 
+ * @author Thomas Wenzlaff
+ * @version 0.1
+ * @since 21.12.2014
  */
 public class OSXAppearance {
 

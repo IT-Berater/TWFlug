@@ -16,10 +16,10 @@ import org.apache.logging.log4j.Logger;
  * @author Thomas Wenzlaff
  * @version 0.1
  * @since 11.11.2014
- *
  */
 public class MessageTyp {
 
+	@SuppressWarnings("unused")
 	private static final Logger LOG = LogManager.getLogger(MessageTyp.class.getName());
 
 	// ID

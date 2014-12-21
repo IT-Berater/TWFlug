@@ -6,7 +6,6 @@ package de.wenzlaff.twflug.be;
  * @author Thomas Wenzlaff
  * @version 0.1
  * @since 11.11.2014
- *
  */
 public enum TransmissionMessage {
 

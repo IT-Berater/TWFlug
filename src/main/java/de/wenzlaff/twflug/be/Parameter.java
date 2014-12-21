@@ -11,24 +11,21 @@ import org.apache.logging.log4j.Logger;
  * @author Thomas Wenzlaff
  * @version 0.1
  * @since 11.11.2014
- *
  */
 public class Parameter {
 
+	@SuppressWarnings("unused")
 	private static final Logger LOG = LogManager.getLogger(Parameter.class.getName());
-	/**
-	 * Die IP Adresse an der gelauscht wird.
-	 */
-	// TODO: entfernen
-	private String ip = "10.0.7.43";
 
-	/**
-	 * Der Port an dem gelauscht wird.
-	 */
+	/** Die IP Adresse an der gelauscht wird wo der DUMP1090 Server läuft. */
+	private String ip;
+
+	/** Der Port an dem gelauscht wird. */
 	private int port = 30003;
 
 	/** Die Fenster Breite in Pixel der Anwendung. */
 	private int breite = 600;
+
 	/** Die Fenster Höhe in Pixel der Anwendung. */
 	private int hoehe = 600;
 
@@ -60,7 +57,7 @@ public class Parameter {
 	private File zielDatei;
 
 	/** Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert. Da wo Fhem läuft. */
-	private String zielIp = "pi-home";
+	private String zielIp;
 	/** Der User für das kopieren auf das Zielsystem. */
 	private String zielUser;
 	/** Das Passwort zu dem Zieluser. */
@@ -357,7 +354,7 @@ public class Parameter {
 		}
 		if (zielPasswort != null) {
 			builder.append("zielPasswort=");
-			builder.append(zielPasswort);
+			builder.append("*****");
 			builder.append(", ");
 		}
 		builder.append("isSSH=");

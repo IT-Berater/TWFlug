@@ -25,7 +25,7 @@ public class Kommandozeile {
 	private static final Logger LOG = LogManager.getLogger(Kommandozeile.class.getName());
 
 	private static final String ANWENDUNG_NAME = "TWFlug";
-	private static final String ANWENDUNG_VERSION = "0.0.1";
+	private static final String ANWENDUNG_VERSION = "0.1.0";
 	private static final String ANWENDUNG_UND_VERSION = ANWENDUNG_NAME + " " + ANWENDUNG_VERSION;
 
 	@SuppressWarnings("static-access")
@@ -47,7 +47,7 @@ public class Kommandozeile {
 		Option debug = new Option("d", "debug", false, "print debugging information (default: false)");
 		options.addOption(debug);
 
-		options.addOption(OptionBuilder.withLongOpt("ip").withDescription("ip adress from DUMP1090 (default: 10.0.7.43)").hasArg().create("i"));
+		options.addOption(OptionBuilder.withLongOpt("ip").withDescription("ip adress from DUMP1090").hasArg().isRequired().create("i"));
 		options.addOption(OptionBuilder.withLongOpt("port").withDescription("port from DUMP1090 (default: 30003)").hasArg().create("p"));
 
 		options.addOption(OptionBuilder.withLongOpt("max-count").withDescription("set max count value (default: 50)").hasArg().create("max"));
@@ -64,14 +64,17 @@ public class Kommandozeile {
 		options.addOption(OptionBuilder.withLongOpt("copy-time").withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
 
 		options.addOption("k", "copy", false, "copy output file to destination (default: false)");
-		// TODO: default Adresse raus
-		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination (default: pi-home)").hasArg().create("ip"));
-		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("user"));
-		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("psw"));
+
+		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination").hasArg().create("dip"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("duser"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("dpsw"));
 		options.addOption(OptionBuilder.withArgName("ziel-datei").hasArg()
-				.withDescription("destination file name (default: /home/pi/fhem/log/flugdaten-YYYY-MM.log) ").withLongOpt("dest-file").create("d"));
+				.withDescription("destination file name (default: /home/pi/fhem/log/flugdaten-YYYY-MM.log) ").withLongOpt("ziel-datei").create("dd"));
 
 		Parameter parameter = new Parameter();
+
+		// -d --ip 10.0.7.43 --copy --ziel-ip pi-home --ziel-user pi --ziel-passwort twtwtwtw --ziel-datei /home/pi/fhem/log/flugdaten-test-mac.log --min-count
+		// 1 -max-count 60 --window-width 300 --window-height 300
 
 		try {
 			// parse the command line arguments
@@ -87,27 +90,26 @@ public class Kommandozeile {
 			parameter.setHoehe(line.getOptionValue("height"));
 
 			// Ziel Passwort nicht vorhanden setzen
-			if (line.hasOption("psw")) {
+			if (line.hasOption("dpsw")) {
 				// wenn Passwort angegeben auch setzen
-				parameter.setZielPasswort(line.getOptionValue("psw"));
+				parameter.setZielPasswort(line.getOptionValue("dpsw"));
 			}
 
 			// Ziel User nicht vorhanden setzen
-			if (line.hasOption("user")) {
+			if (line.hasOption("duser")) {
 				// wenn User angegeben auch setzen
-				parameter.setZielUser(line.getOptionValue("user"));
+				parameter.setZielUser(line.getOptionValue("duser"));
 			} else {
 				// default ziel User
 				parameter.setZielUser("pi");
 			}
 
 			// Ziel IP nicht vorhanden setzen
-			if (line.hasOption("ip")) {
+			if (line.hasOption("dip")) {
 				// wenn Ausgabe Datei angegeben
-				parameter.setZielIp(line.getOptionValue("ip"));
+				parameter.setZielIp(line.getOptionValue("dip"));
 			} else {
 				// default ziel IP
-				// TODO anpassen
 				parameter.setZielIp("pi-home");
 			}
 
@@ -121,9 +123,9 @@ public class Kommandozeile {
 			}
 
 			// Ziel Datei setzen
-			if (line.hasOption("d")) {
+			if (line.hasOption("dd")) {
 				// wenn Ausgabe Datei angegeben
-				parameter.setZielDatei(line.getOptionValue("d"));
+				parameter.setZielDatei(line.getOptionValue("dd"));
 			} else {
 				// default Ziel Datei
 				String zielDatei = "/home/pi/fhem/log/" + Util.getOutputDatei();
@@ -136,6 +138,7 @@ public class Kommandozeile {
 
 			if (line.hasOption("d")) {
 				System.out.println("Starte " + ANWENDUNG_UND_VERSION + " im Debug Modus ...");
+				LOG.debug("Starte " + ANWENDUNG_UND_VERSION + " im Debug Modus ...");
 				parameter.setDebug(true);
 			}
 
