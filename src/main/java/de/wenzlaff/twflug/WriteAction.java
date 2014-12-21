@@ -18,6 +18,7 @@ import de.wenzlaff.twflug.be.Parameter;
  */
 public class WriteAction extends TimerTask {
 
+	@SuppressWarnings("unused")
 	private static final Logger LOG = LogManager.getLogger(WriteAction.class.getName());
 
 	private FlugInfos flugzeuge;
@@ -30,7 +31,7 @@ public class WriteAction extends TimerTask {
 
 	@Override
 	public void run() {
-		Util.writeFlugdaten(flugzeuge, parameter.getOutputDatei());
+		Util.writeFlugdaten(flugzeuge, parameter);
 		flugzeuge.setMaxAnzahlFlugzeugeAufNull();
 	}
 

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FlugInfos;
+import de.wenzlaff.twflug.be.Parameter;
 
 /**
  * Hilfsfunktionen.
@@ -74,7 +75,10 @@ public class Util {
 		return dateiname;
 	}
 
-	public static void writeFlugdaten(final FlugInfos flugzeuge, final File outputDatei) {
+	public static void writeFlugdaten(final FlugInfos flugzeuge, final Parameter parameter) {
+
+		File outputDatei = parameter.getOutputDatei();
+
 		// Speichern der Daten in eine Datei im Format:
 		// 2014-01-31_15:12:00 flugdaten anzahl: 12
 		String zeitstempel = getZeitstempel();
@@ -82,8 +86,10 @@ public class Util {
 
 		try {
 			FileUtils.writeStringToFile(outputDatei, zeile, true);
-			if (LOG.isInfoEnabled()) {
-				LOG.info("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+			if (parameter.isDebug()) {
+				if (LOG.isInfoEnabled()) {
+					LOG.info("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+				}
 			}
 		} catch (IOException e) {
 			LOG.error("Fehler beim schreiben der Flugdaten.", e);
