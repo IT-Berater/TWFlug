@@ -88,7 +88,6 @@ public class Client {
 				if (parameter.isDebug()) {
 					System.out.println(fd);
 				}
-
 				flugzeuge.addNachricht(fd);
 
 				if (!parameter.isNoGui()) {

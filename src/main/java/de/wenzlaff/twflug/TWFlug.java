@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
 
 import de.wenzlaff.twflug.be.Parameter;
 
@@ -26,6 +27,9 @@ import de.wenzlaff.twflug.be.Parameter;
  */
 public class TWFlug {
 
+	static {
+		System.setProperty(XmlConfigurationFactory.CONFIGURATION_FILE_PROPERTY, "./log4j2.xml");
+	}
 	/** Log4j2 siehe http://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration */
 	private static final Logger LOG = LogManager.getLogger(TWFlug.class.getName());
 
