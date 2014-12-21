@@ -8,12 +8,11 @@
   
   <fileSets>
     <fileSet>
-      <directory>${project.build.directory}</directory>
-      <outputDirectory>/</outputDirectory>
-      <includes>
-         <include>twflug.jar</include>
-         <include>startTWFlug.sh</include>
-         <include>log4j2.xml</include>
+      <directory>${basedir}/license</directory>
+      <outputDirectory>/license</outputDirectory>
+      <includes>      
+         <include>*.html</include>
+         <include>*.txt</include>
       </includes>
     </fileSet>
     <fileSet>
@@ -21,6 +20,15 @@
       <outputDirectory>/</outputDirectory>
       <includes>
         <include>/lib/*.jar</include>
+        <include>twflug.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${basedir}</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>        
+         <include>startTWFlug.sh</include>
+         <include>log4j2.xml</include>     
       </includes>
     </fileSet>
     </fileSets>
