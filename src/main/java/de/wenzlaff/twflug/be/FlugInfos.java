@@ -47,13 +47,13 @@ public class FlugInfos {
 					flugInfos.put(key, satz);
 				}
 			} else {
-				if (parameter.isDebug()) {
+				if (parameter != null && parameter.isDebug()) {
 					LOG.info("INFO: Es gibt kein Key (HexIdent) in der Nachricht. Flugzeug bzw. Nachricht kann nicht identifiziert werden und wird ignoriert. Die Fehlerhafte Nachricht: "
 							+ nachricht);
 				}
 			}
 		} else {
-			if (parameter.isDebug()) {
+			if (parameter != null && parameter.isDebug()) {
 				LOG.info("INFO: Es muss eine Nachricht zum hinzufügen übergeben werden. Nachricht = null");
 			}
 		}
