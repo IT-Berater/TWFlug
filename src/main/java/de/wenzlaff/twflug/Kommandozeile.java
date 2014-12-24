@@ -56,7 +56,7 @@ public class Kommandozeile {
 		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with (default: 600)").hasArg().create("width"));
 		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight (default: 600)").hasArg().create("height"));
 
-		options.addOption(OptionBuilder.withArgName("file").hasArg().withDescription("use given file for DUMP output (default: flugdaten-YYYY-MM.log) ")
+		options.addOption(OptionBuilder.withArgName("outputfile").hasArg().withDescription("use given file for DUMP output (default: flugdaten-YYYY-MM.log) ")
 				.withLongOpt("outputfile").create("o"));
 
 		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms (default: 300000 ms = 5 Minuten)").hasArg().create("r"));
@@ -72,9 +72,6 @@ public class Kommandozeile {
 				.withDescription("destination file name (default: /home/pi/fhem/log/flugdaten-YYYY-MM.log) ").withLongOpt("ziel-datei").create("dd"));
 
 		Parameter parameter = new Parameter();
-
-		// -d --ip 10.0.7.43 --copy --ziel-ip pi-home --ziel-user pi --ziel-passwort twtwtwtw --ziel-datei /home/pi/fhem/log/flugdaten-test-mac.log --min-count
-		// 1 -max-count 60 --window-width 300 --window-height 300
 
 		try {
 			// parse the command line arguments

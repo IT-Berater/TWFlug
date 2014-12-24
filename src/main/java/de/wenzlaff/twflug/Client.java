@@ -18,7 +18,7 @@ import de.wenzlaff.twflug.gui.HauptFenster;
  * <pre>
  *  Der DUMP1090 Server liefert über Port 30003 die folgenden Daten.
  *  
- *  Eingabe in Browser: http://10.0.7.43:30003 
+ *  Eingabe in Browser zb.: http://10.6.7.43:30003 
  *  
  *  liefert z.B:
  *  
