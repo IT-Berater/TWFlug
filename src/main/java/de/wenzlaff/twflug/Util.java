@@ -19,15 +19,10 @@ import de.wenzlaff.twflug.be.Parameter;
  * @author Thomas Wenzlaff
  * @version 0.1
  * @since 11.11.2014
- *
  */
 public class Util {
 
 	private static final Logger LOG = LogManager.getLogger(Util.class.getName());
-
-	private static final SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("YYYY-MM-dd_HH:mm:ss");
-
-	private static final SimpleDateFormat DATE_FORMAT_YYYY_MM = new SimpleDateFormat("YYYY-MM");
 
 	public static FieldDataRaw getFieldData(final String empfangeneNachricht) {
 
@@ -70,6 +65,7 @@ public class Util {
 		// z.B.
 		// flugdaten-2014-02.log
 		Date d = new Date(System.currentTimeMillis());
+		SimpleDateFormat DATE_FORMAT_YYYY_MM = new SimpleDateFormat("yyyy-MM");
 		String dateiName = "flugdaten-" + DATE_FORMAT_YYYY_MM.format(d) + ".log";
 		File dateiname = new File(dateiName);
 		return dateiname;
@@ -99,6 +95,7 @@ public class Util {
 	private static String getZeitstempel() {
 		// 2014-01-31_15:12:00
 		Date d = new Date(System.currentTimeMillis());
+		SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		String zeitstempel = DATE_FORMAT_UND_UHRZEIT.format(d);
 		return zeitstempel;
 	}
