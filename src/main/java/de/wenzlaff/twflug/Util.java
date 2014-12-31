@@ -26,6 +26,13 @@ public class Util {
 
 	public static FieldDataRaw getFieldData(final String empfangeneNachricht) {
 
+		if (empfangeneNachricht == null) {
+			throw new IllegalArgumentException("Die empfangeneNachricht ist null");
+		}
+		if (empfangeneNachricht.isEmpty()) {
+			throw new IllegalArgumentException("Die empfangeneNachricht ist leer");
+		}
+
 		// alle Komma separirten Felder aufteilen
 		String nachricht[] = empfangeneNachricht.split(",");
 
@@ -72,6 +79,10 @@ public class Util {
 	}
 
 	public static void writeFlugdaten(final FlugInfos flugzeuge, final Parameter parameter) {
+
+		if (flugzeuge == null || parameter == null) {
+			throw new IllegalArgumentException("Die FlugInfos oder/und die Parameter sind null");
+		}
 
 		File outputDatei = parameter.getOutputDatei();
 
