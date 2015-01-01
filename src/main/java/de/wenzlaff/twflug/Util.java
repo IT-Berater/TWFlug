@@ -3,6 +3,7 @@ package de.wenzlaff.twflug;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.io.FileUtils;
@@ -24,6 +25,17 @@ public class Util {
 
 	private static final Logger LOG = LogManager.getLogger(Util.class.getName());
 
+	private static final DateTimeFormatter ZEITSTEMPEL_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss");
+
+	private static final DateTimeFormatter ZEITSTEMPEL_FORMAT_JAHR = DateTimeFormatter.ofPattern("yyyy-MM");
+
+	/**
+	 * Liefert die Empfangene Nachricht als FieldDataRaw Objekt.
+	 * 
+	 * @param empfangeneNachricht
+	 *            Kommasepariert.
+	 * @return {@link FieldDataRaw} die Rohdaten.
+	 */
 	public static FieldDataRaw getFieldData(final String empfangeneNachricht) {
 
 		if (empfangeneNachricht == null) {
@@ -66,6 +78,11 @@ public class Util {
 		return d;
 	}
 
+	/**
+	 * Liefert den Namen der OutputDatei inkl. Pfad. Der Dateiname ist mit einen Zeitstempel versehen.
+	 * 
+	 * @return
+	 */
 	public static File getOutputDatei() {
 		// Format für Fhem. Jeden Monat eine neue Datei:
 		// flugdaten-%Y-%m.log
@@ -73,8 +90,7 @@ public class Util {
 		// flugdaten-2014-02.log
 
 		LocalDate d = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
-		String jahrMonat = formatter.format(d);
+		String jahrMonat = ZEITSTEMPEL_FORMAT_JAHR.format(d);
 
 		String dateiName = "flugdaten-" + jahrMonat + ".log";
 		File dateiname = new File(dateiName);
@@ -108,10 +124,8 @@ public class Util {
 
 	private static String getZeitstempel() {
 		// 2014-01-31_15:12:00
-		LocalDate d = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss");
-		String zeitstempel = formatter.format(d);
-
+		LocalDateTime d = LocalDateTime.now();
+		String zeitstempel = ZEITSTEMPEL_FORMAT.format(d);
 		// Date d = new Date(System.currentTimeMillis());
 		// SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 		// String zeitstempel = DATE_FORMAT_UND_UHRZEIT.format(d);

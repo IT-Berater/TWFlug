@@ -10,7 +10,7 @@
 	<name>twflug</name>
 	<url>http://www.wenzlaff.de</url>
 
-	<inceptionYear>2014</inceptionYear>
+	<inceptionYear>2015</inceptionYear>
 	<developers>
 		<developer>
 			<id>thomas.wenzlaff</id>
@@ -31,7 +31,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.7</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<junit.version>4.12</junit.version>
 	</properties>
 

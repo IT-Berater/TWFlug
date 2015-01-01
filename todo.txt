@@ -1,0 +1,17 @@
+
+
+01.01.15 auf JDK 1.8. neue Time API
+
+29.12.14 Fix Jahreszahl mit gleicher Version hochgeladen
+
+TODO:
+
+-java -h Target läuft nur mit option i
+-keine POM in twflug.jar
+-neue Time Api verwenden
+-bei SWACK 7700 logeintrag
+-Flugzeuge pro Tag speichern
+-Radar Stern Diagramm
+
+
+25.12.2014 Version 0.1.0 veröffentlicht
