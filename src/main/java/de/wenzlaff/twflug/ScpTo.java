@@ -59,6 +59,12 @@ public class ScpTo {
 			try {
 
 				String lokalDateiPath = lokaleDatendatei.getAbsolutePath();
+
+				if (!lokaleDatendatei.exists()) {
+					LOG.info("Konnte Datei " + lokalDateiPath + " nicht kopieren, da sie nicht vorhanden ist.");
+					return;
+				}
+
 				String zielDateiName = zielDatei.getAbsolutePath();
 
 				JSch jsch = new JSch();
@@ -176,6 +182,7 @@ public class ScpTo {
 			if (parameter.isDebug()) {
 				LOG.info("Ok, Datei " + parameter.getZielDatei() + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
 			}
+
 		} else {
 			LOG.error("Konnte Datei nicht kopieren, da ein Parameter null ist. lokaleDatendatei=" + lokaleDatendatei + ", zielUser=" + zielUser + ", passwort="
 					+ passwort + ", host=" + host + ", zielDatei" + zielDatei);

@@ -2,8 +2,8 @@ package de.wenzlaff.twflug;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
@@ -71,9 +71,12 @@ public class Util {
 		// flugdaten-%Y-%m.log
 		// z.B.
 		// flugdaten-2014-02.log
-		Date d = new Date(System.currentTimeMillis());
-		SimpleDateFormat DATE_FORMAT_YYYY_MM = new SimpleDateFormat("yyyy-MM");
-		String dateiName = "flugdaten-" + DATE_FORMAT_YYYY_MM.format(d) + ".log";
+
+		LocalDate d = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+		String jahrMonat = formatter.format(d);
+
+		String dateiName = "flugdaten-" + jahrMonat + ".log";
 		File dateiname = new File(dateiName);
 		return dateiname;
 	}
@@ -105,9 +108,13 @@ public class Util {
 
 	private static String getZeitstempel() {
 		// 2014-01-31_15:12:00
-		Date d = new Date(System.currentTimeMillis());
-		SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-		String zeitstempel = DATE_FORMAT_UND_UHRZEIT.format(d);
+		LocalDate d = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss");
+		String zeitstempel = formatter.format(d);
+
+		// Date d = new Date(System.currentTimeMillis());
+		// SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		// String zeitstempel = DATE_FORMAT_UND_UHRZEIT.format(d);
 		return zeitstempel;
 	}
 
