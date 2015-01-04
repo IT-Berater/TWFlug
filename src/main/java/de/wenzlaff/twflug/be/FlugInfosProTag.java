@@ -1,9 +1,7 @@
 package de.wenzlaff.twflug.be;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,13 +22,13 @@ public class FlugInfosProTag {
 	 * 
 	 * Die empfangenen FlugInfos. Key: hexIdent Key ist die ICAO oder auch HexIdent.
 	 */
-	private Map<String, List<FieldDataRaw>> flugInfosProTag;
+	private List<String> flugInfosProTag;
 
 	/** Die Parameter. */
 	private Parameter parameter;
 
 	public FlugInfosProTag() {
-		flugInfosProTag = new HashMap<String, List<FieldDataRaw>>();
+		flugInfosProTag = new ArrayList<String>();
 	}
 
 	public void setParameter(Parameter parameter) {
@@ -44,14 +42,11 @@ public class FlugInfosProTag {
 
 				// testen ob Key schon vorhanden
 				String key = nachricht.getHexIdent();
-				if (flugInfosProTag.containsKey(key)) {
-					List<FieldDataRaw> satz = flugInfosProTag.get(key);
-					satz.add(nachricht);
+				if (flugInfosProTag.contains(key)) {
+					// schon Vorhanden,
 				} else {
 					// nicht vorhanden
-					List<FieldDataRaw> satz = new ArrayList<FieldDataRaw>();
-					satz.add(nachricht);
-					flugInfosProTag.put(key, satz);
+					flugInfosProTag.add(key);
 				}
 			} else {
 				if (parameter != null && parameter.isDebug()) {
