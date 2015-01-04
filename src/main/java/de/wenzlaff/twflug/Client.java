@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.wenzlaff.twflug.be.FieldDataRaw;
+import de.wenzlaff.twflug.be.FieldDataRaw.EMERGENCY;
 import de.wenzlaff.twflug.be.FlugInfos;
 import de.wenzlaff.twflug.be.Parameter;
 import de.wenzlaff.twflug.gui.HauptFenster;
@@ -57,13 +58,14 @@ public class Client {
 	/** 1 Minute Verzögerungszeit in ms. */
 	private static final int DELAY = 1000 * 60;
 
+	/** Alle Flugzeug Infos werden hier gehalten. Wird in intervallen wieder auf 0 zurückgesetzt für die aktualisierungen. */
 	private FlugInfos flugzeuge = new FlugInfos();
 
 	private Parameter parameter;
 
 	private HauptFenster hauptFenster;
 
-	void ausgabe(Parameter parameter) throws IOException {
+	void start(Parameter parameter) throws IOException {
 
 		this.parameter = parameter;
 
@@ -90,6 +92,11 @@ public class Client {
 				}
 				flugzeuge.addNachricht(fd);
 
+				// Notfall eingetreten, loggen
+				if (fd.isEmergency() == EMERGENCY.YES) {
+					new EmergencyAction(fd, parameter);
+				}
+
 				if (!parameter.isNoGui()) {
 					hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
 				}
@@ -111,14 +118,14 @@ public class Client {
 
 	private void resetFlugInfoTimer(int ms) {
 
-		Timer timer = new Timer();
+		Timer timer = new Timer("WriteAction");
 		// nach DELAY (einer Minute) und dann jede ms (5 Minute), run() aufrufen
 		timer.schedule(new WriteAction(flugzeuge, parameter), DELAY, ms);
 	}
 
 	private void startCopyTimer() {
 
-		Timer timer = new Timer();
+		Timer timer = new Timer("CopyAction");
 		// nach DELAY/2 (einer Minute/2) und dann jede ms (30 Minute), run() aufrufen
 		timer.schedule(new CopyAction(parameter), DELAY / 2, parameter.getCopyTime());
 	}

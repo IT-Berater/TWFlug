@@ -29,6 +29,9 @@ public class Util {
 
 	private static final DateTimeFormatter ZEITSTEMPEL_FORMAT_JAHR = DateTimeFormatter.ofPattern("yyyy-MM");
 
+	private static final String DATEINAME_FLUGDATEN = "flugdaten-";
+	private static final String DATEINAME_EXTENSION_FLUGDATEN = ".log";
+
 	/**
 	 * Liefert die Empfangene Nachricht als FieldDataRaw Objekt.
 	 * 
@@ -48,7 +51,7 @@ public class Util {
 		// alle Komma separirten Felder aufteilen
 		String nachricht[] = empfangeneNachricht.split(",");
 
-		// nachricht in FieldData ablegen
+		// die Nachricht in FieldData ablegen
 		FieldDataRaw d = new FieldDataRaw();
 
 		// alle Felder in die FieldData mappen
@@ -62,6 +65,8 @@ public class Util {
 		d.setTimeMessageGenerated(nachricht[7]);
 		d.setDateMessageLogged(nachricht[8]);
 		d.setTimeMessageLogged(nachricht[9]);
+
+		// Optionale Felder
 		d.setCallsign(nachricht[10]);
 		d.setAltitude(nachricht[11]);
 		d.setGroundSpeed(nachricht[12]);
@@ -79,36 +84,43 @@ public class Util {
 	}
 
 	/**
-	 * Liefert den Namen der OutputDatei inkl. Pfad. Der Dateiname ist mit einen Zeitstempel versehen.
+	 * Liefert den Namen der OutputDatei inkl. Pfad. Der Dateiname ist mit einen Zeitstempel versehen. Format für Fhem.
 	 * 
-	 * @return
+	 * Jeden Monat eine neue Datei: flugdaten-%Y-%m.log
+	 * 
+	 * z.B. flugdaten-2015-01.log mit führenden Nullen beim Monat
+	 * 
+	 * @return der Dateiname für die Output Datei.
 	 */
 	public static File getOutputDatei() {
-		// Format für Fhem. Jeden Monat eine neue Datei:
-		// flugdaten-%Y-%m.log
-		// z.B.
-		// flugdaten-2014-02.log
 
-		LocalDate d = LocalDate.now();
-		String jahrMonat = ZEITSTEMPEL_FORMAT_JAHR.format(d);
-
-		String dateiName = "flugdaten-" + jahrMonat + ".log";
+		LocalDate heute = LocalDate.now();
+		final String jahrMonat = ZEITSTEMPEL_FORMAT_JAHR.format(heute);
+		final String dateiName = DATEINAME_FLUGDATEN + jahrMonat + DATEINAME_EXTENSION_FLUGDATEN;
 		File dateiname = new File(dateiName);
 		return dateiname;
 	}
 
+	/**
+	 * Schreibt einen Eintrag der Flugdaten in die Logdatei.
+	 * 
+	 * Speichern der Daten in eine Datei im Format:
+	 * 
+	 * 2014-01-31_15:12:00 flugdaten anzahl: 12
+	 * 
+	 * @param flugzeuge
+	 * @param parameter
+	 */
 	public static void writeFlugdaten(final FlugInfos flugzeuge, final Parameter parameter) {
 
 		if (flugzeuge == null || parameter == null) {
 			throw new IllegalArgumentException("Die FlugInfos oder/und die Parameter sind null");
 		}
 
-		File outputDatei = parameter.getOutputDatei();
+		final File outputDatei = parameter.getOutputDatei();
 
-		// Speichern der Daten in eine Datei im Format:
-		// 2014-01-31_15:12:00 flugdaten anzahl: 12
-		String zeitstempel = getZeitstempel();
-		String zeile = zeitstempel + " flugdaten anzahl: " + flugzeuge.getMaxAnzahlFlugzeuge() + System.getProperty("line.separator");
+		final String zeitstempel = getZeitstempel();
+		final String zeile = zeitstempel + " flugdaten anzahl: " + flugzeuge.getMaxAnzahlFlugzeuge() + System.getProperty("line.separator");
 
 		try {
 			FileUtils.writeStringToFile(outputDatei, zeile, true);
@@ -124,11 +136,8 @@ public class Util {
 
 	private static String getZeitstempel() {
 		// 2014-01-31_15:12:00
-		LocalDateTime d = LocalDateTime.now();
-		String zeitstempel = ZEITSTEMPEL_FORMAT.format(d);
-		// Date d = new Date(System.currentTimeMillis());
-		// SimpleDateFormat DATE_FORMAT_UND_UHRZEIT = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-		// String zeitstempel = DATE_FORMAT_UND_UHRZEIT.format(d);
+		LocalDateTime heute = LocalDateTime.now();
+		String zeitstempel = ZEITSTEMPEL_FORMAT.format(heute);
 		return zeitstempel;
 	}
 

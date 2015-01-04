@@ -33,6 +33,11 @@ public class TWFlug {
 	/** Log4j2 siehe http://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration */
 	private static final Logger LOG = LogManager.getLogger(TWFlug.class.getName());
 
+	/**
+	 * Die Methodt für das Aufrufen der TWFlug Anwendung mit oder ohne Gui.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		LOG.debug("Starte TWFlug ...");
@@ -46,7 +51,7 @@ public class TWFlug {
 		}
 		try {
 			Client client = new Client();
-			client.ausgabe(parameter);
+			client.start(parameter);
 		} catch (IOException e) {
 			LOG.error("Fehler beim Starten des Client: " + e.getMessage());
 		}
