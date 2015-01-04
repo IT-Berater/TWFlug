@@ -1,10 +1,11 @@
-package de.wenzlaff.twflug;
+package de.wenzlaff.twflug.action;
 
 import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.wenzlaff.twflug.Util;
 import de.wenzlaff.twflug.be.FlugInfos;
 import de.wenzlaff.twflug.be.Parameter;
 

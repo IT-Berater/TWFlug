@@ -4,13 +4,24 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import de.wenzlaff.twflug.action.AnzahlProTagAction;
+import de.wenzlaff.twflug.action.CopyAction;
+import de.wenzlaff.twflug.action.EmergencyAction;
+import de.wenzlaff.twflug.action.WriteAction;
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FieldDataRaw.EMERGENCY;
+import de.wenzlaff.twflug.be.FlugInfosProTag;
 import de.wenzlaff.twflug.be.FlugInfos;
 import de.wenzlaff.twflug.be.Parameter;
 import de.wenzlaff.twflug.gui.HauptFenster;
@@ -59,17 +70,32 @@ public class Client {
 	private static final int DELAY = 1000 * 60;
 
 	/** Alle Flugzeug Infos werden hier gehalten. Wird in intervallen wieder auf 0 zurückgesetzt für die aktualisierungen. */
-	private FlugInfos flugzeuge = new FlugInfos();
+	private FlugInfos flugzeuge;
 
+	/** Objekt für die Ermittlung der Anzahl der Flugzeuge pro Tag. */
+	private FlugInfosProTag flugInfosProTag;
+
+	/** Die Komandozeilen Parameter. */
 	private Parameter parameter;
 
+	/** Die Gui, das Hauptfenster mit dem Tacho der Anzahl der Flugzeuge. */
 	private HauptFenster hauptFenster;
 
-	void start(Parameter parameter) throws IOException {
+	/** Plant die Ausführungen. */
+	private ScheduledExecutorService scheduler;
+
+	public Client() {
+		scheduler = Executors.newScheduledThreadPool(1);
+		flugzeuge = new FlugInfos();
+		flugInfosProTag = new FlugInfosProTag();
+	}
+
+	public void start(Parameter parameter) throws IOException {
 
 		this.parameter = parameter;
 
 		flugzeuge.setParameter(parameter);
+		flugInfosProTag.setParameter(parameter);
 
 		if (!parameter.isNoGui()) {
 			hauptFenster = new HauptFenster(parameter);
@@ -79,6 +105,8 @@ public class Client {
 		resetFlugInfoTimer(parameter.getRefreshTime());
 
 		startCopyTimer();
+
+		startAnzahlProTagTimer();
 
 		while (true) {
 
@@ -91,6 +119,7 @@ public class Client {
 					System.out.println(fd);
 				}
 				flugzeuge.addNachricht(fd);
+				flugInfosProTag.addNachricht(fd);
 
 				// Notfall eingetreten, loggen
 				if (fd.isEmergency() == EMERGENCY.YES) {
@@ -128,6 +157,14 @@ public class Client {
 		Timer timer = new Timer("CopyAction");
 		// nach DELAY/2 (einer Minute/2) und dann jede ms (30 Minute), run() aufrufen
 		timer.schedule(new CopyAction(parameter), DELAY / 2, parameter.getCopyTime());
+	}
+
+	private void startAnzahlProTagTimer() {
+		// einmal am Tag um Mitternacht
+		Long midnight = LocalDateTime.now().until(LocalDate.now().plusDays(1).atStartOfDay(), ChronoUnit.MINUTES);
+		// scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), midnight, 1440, TimeUnit.MINUTES);
+		// Todo: zum testen alle 10 Sekunden
+		scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), 1, 10, TimeUnit.SECONDS);
 	}
 
 }

@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FlugInfos;
+import de.wenzlaff.twflug.be.FlugInfosProTag;
 import de.wenzlaff.twflug.be.Parameter;
 
 /**
@@ -101,6 +102,13 @@ public class Util {
 		return dateiname;
 	}
 
+	private static String getZeitstempel() {
+		// 2014-01-31_15:12:00
+		LocalDateTime heute = LocalDateTime.now();
+		String zeitstempel = ZEITSTEMPEL_FORMAT.format(heute);
+		return zeitstempel;
+	}
+
 	/**
 	 * Schreibt einen Eintrag der Flugdaten in die Logdatei.
 	 * 
@@ -134,11 +142,37 @@ public class Util {
 		}
 	}
 
-	private static String getZeitstempel() {
-		// 2014-01-31_15:12:00
-		LocalDateTime heute = LocalDateTime.now();
-		String zeitstempel = ZEITSTEMPEL_FORMAT.format(heute);
-		return zeitstempel;
+	/**
+	 * Schreibt einen Eintrag der Flugdaten in die Logdatei.
+	 * 
+	 * Speichern der Daten in eine Datei im Format:
+	 * 
+	 * 2014-01-31_15:12:00 flugdaten summe-pro-tag: 12
+	 * 
+	 * @param flugzeuge
+	 * @param parameter
+	 */
+	public static void writeFlugdatenProTag(final FlugInfosProTag flugzeuge, final Parameter parameter) {
+
+		if (flugzeuge == null || parameter == null) {
+			throw new IllegalArgumentException("Die FlugInfosProTag oder/und die Parameter sind null");
+		}
+
+		final File outputDatei = parameter.getOutputDatei();
+
+		final String zeitstempel = getZeitstempel();
+		final String zeile = zeitstempel + " flugdaten summe-pro-tag: " + flugzeuge.getAnzahlFlugzeugeProTag() + System.getProperty("line.separator");
+
+		try {
+			FileUtils.writeStringToFile(outputDatei, zeile, true);
+			if (parameter.isDebug()) {
+				if (LOG.isInfoEnabled()) {
+					LOG.info("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+				}
+			}
+		} catch (IOException e) {
+			LOG.error("Fehler beim schreiben der Flugdaten.", e);
+		}
 	}
 
 }
