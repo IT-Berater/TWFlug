@@ -21,8 +21,8 @@ import de.wenzlaff.twflug.action.EmergencyAction;
 import de.wenzlaff.twflug.action.WriteAction;
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FieldDataRaw.EMERGENCY;
-import de.wenzlaff.twflug.be.FlugInfosProTag;
 import de.wenzlaff.twflug.be.FlugInfos;
+import de.wenzlaff.twflug.be.FlugInfosProTag;
 import de.wenzlaff.twflug.be.Parameter;
 import de.wenzlaff.twflug.gui.HauptFenster;
 
@@ -161,10 +161,10 @@ public class Client {
 
 	private void startAnzahlProTagTimer() {
 		// einmal am Tag um Mitternacht
-		Long midnight = LocalDateTime.now().until(LocalDate.now().plusDays(1).atStartOfDay(), ChronoUnit.MINUTES);
-		// scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), midnight, 1440, TimeUnit.MINUTES);
+		Long mitternacht = LocalDateTime.now().until(LocalDate.now().plusDays(1).atStartOfDay(), ChronoUnit.MINUTES);
+		scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), mitternacht, 1440, TimeUnit.MINUTES);
 		// Todo: zum testen alle 10 Sekunden
-		scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), 1, 10, TimeUnit.SECONDS);
+		// scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), 1, 10, TimeUnit.SECONDS);
 	}
 
 }
