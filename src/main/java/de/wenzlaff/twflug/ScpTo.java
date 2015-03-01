@@ -36,40 +36,41 @@ public class ScpTo {
 	 */
 	public static void copyFile(Parameter parameter) {
 
-		File lokaleDatendatei = parameter.getOutputDatei();
 		String zielUser = parameter.getZielUser();
-		String passwort = parameter.getZielPasswort();
-		String host = parameter.getZielIp();
-		File zielDatei = parameter.getZielDatei();
+		String zielPasswort = parameter.getZielPasswort();
+		String zielIp = parameter.getZielIp();
+
+		File lokaleOutputDatei = Util.getLokaleOutputDatei();
+		File entfernteOutputDatei = Util.getEntfernteOutputDatei();
 
 		// String khfile = "/home/pi/.ssh/known_hosts";
 		// String khfile = "/Users/thomaswenzlaff/.ssh/known_hosts";
 		// String identityfile = "/home/pi/.ssh/id_rsa";
 		// String identityfile = "/Users/thomaswenzlaff/.ssh/id_rsa";
 
-		if (lokaleDatendatei != null && zielUser != null && passwort != null && host != null && zielDatei != null) {
+		if (lokaleOutputDatei != null && zielUser != null && zielPasswort != null && zielIp != null && entfernteOutputDatei != null) {
 
 			if (parameter.isDebug()) {
-				LOG.debug("Starte kopieren mit lokaleDatendatei=" + lokaleDatendatei + ", user=" + zielUser + ", passwort=" + passwort + ", host=" + host
-						+ ", zielDatei=" + zielDatei);
+				LOG.debug("Starte kopieren mit lokaleDatendatei=" + lokaleOutputDatei + ", user=" + zielUser + ", passwort=" + zielPasswort + ", host=" + zielIp
+						+ ", zielDatei=" + entfernteOutputDatei);
 			}
 			// [flugdaten-2014-12.log, pi@pi-home:/home/pi/fhem/log/flugdaten-2014-12.log]
 
 			FileInputStream fis = null;
 			try {
 
-				String lokalDateiPath = lokaleDatendatei.getAbsolutePath();
+				String lokalDateiPath = lokaleOutputDatei.getAbsolutePath();
 
-				if (!lokaleDatendatei.exists()) {
+				if (!lokaleOutputDatei.exists()) {
 					LOG.info("Konnte Datei " + lokalDateiPath + " nicht kopieren, da sie nicht vorhanden ist.");
 					return;
 				}
 
-				String zielDateiName = zielDatei.getAbsolutePath();
+				String zielDateiName = entfernteOutputDatei.getAbsolutePath();
 
 				JSch jsch = new JSch();
 
-				Session session = jsch.getSession(zielUser, host, 22);
+				Session session = jsch.getSession(zielUser, zielIp, 22);
 
 				// jsch.setKnownHosts(khfile);
 				// jsch.removeAllIdentity();
@@ -77,7 +78,7 @@ public class ScpTo {
 
 				UserInfo ui = new PrivateUserInfo();
 				session.setUserInfo(ui);
-				session.setPassword(passwort);
+				session.setPassword(zielPasswort);
 
 				// TODO: über Parameter als default einsteuern
 				// nur zum Testen das ist unsicher
@@ -169,7 +170,7 @@ public class ScpTo {
 				channel.disconnect();
 				session.disconnect();
 				if (parameter.isDebug()) {
-					LOG.info("Ok, Datei " + parameter.getZielDatei() + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
+					LOG.info("Ok, Datei " + zielDateiName + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
 				}
 			} catch (Exception e) {
 				LOG.error(e);
@@ -180,12 +181,12 @@ public class ScpTo {
 				}
 			}
 			if (parameter.isDebug()) {
-				LOG.info("Ok, Datei " + parameter.getZielDatei() + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
+				LOG.info("Ok, Datei " + entfernteOutputDatei.getAbsolutePath() + " auf Zielsystem IP: " + parameter.getZielIp() + " kopiert");
 			}
 
 		} else {
-			LOG.error("Konnte Datei nicht kopieren, da ein Parameter null ist. lokaleDatendatei=" + lokaleDatendatei + ", zielUser=" + zielUser + ", passwort="
-					+ passwort + ", host=" + host + ", zielDatei" + zielDatei);
+			LOG.error("Konnte Datei nicht kopieren, da ein Parameter null ist. lokaleDatendatei=" + lokaleOutputDatei + ", zielUser=" + zielUser + ", passwort="
+					+ zielPasswort + ", host=" + zielIp + ", zielDatei" + entfernteOutputDatei);
 		}
 	}
 

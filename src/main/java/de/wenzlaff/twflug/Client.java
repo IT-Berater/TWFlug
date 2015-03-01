@@ -114,25 +114,33 @@ public class Client {
 				// lese Daten vom DUMP1090 Server, jede empfangene Nachricht
 				String empfangeneNachricht = leseNachricht(socket);
 
-				FieldDataRaw fd = Util.getFieldData(empfangeneNachricht);
-				if (parameter.isDebug()) {
-					System.out.println(fd);
-				}
-				flugzeuge.addNachricht(fd);
-				flugInfosProTag.addNachricht(fd);
+				if (isNachrichtValid(empfangeneNachricht)) {
 
-				// Notfall eingetreten, loggen
-				if (fd.isEmergency() == EMERGENCY.YES) {
-					new EmergencyAction(fd, parameter);
-				}
+					FieldDataRaw fd = Util.getFieldData(empfangeneNachricht);
+					if (parameter.isDebug()) {
+						System.out.println(fd);
+					}
 
-				if (!parameter.isNoGui()) {
-					hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
+					flugzeuge.addNachricht(fd);
+					flugInfosProTag.addNachricht(fd);
+
+					// Notfall eingetreten, loggen
+					if (fd.isEmergency() == EMERGENCY.YES) {
+						new EmergencyAction(fd, parameter);
+					}
+
+					if (!parameter.isNoGui()) {
+						hauptFenster.aktualisieren(flugzeuge.getMaxAnzahlFlugzeuge());
+					}
 				}
 			} catch (Exception e) {
-				LOG.error("Error in Message loop. " + e.getLocalizedMessage(), e);
+				// LOG.error("Error in Message loop. " + e.getLocalizedMessage(), e);
 			}
 		}
+	}
+
+	private boolean isNachrichtValid(String empfangeneNachricht) {
+		return empfangeneNachricht.codePointCount(0, empfangeneNachricht.length()) > 9;
 	}
 
 	private String leseNachricht(Socket socket) throws IOException {

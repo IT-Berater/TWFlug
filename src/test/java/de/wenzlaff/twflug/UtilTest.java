@@ -45,11 +45,18 @@ public class UtilTest {
 
 	@Test
 	public void testGetOutputDatei() {
-		File datei = Util.getOutputDatei();
+		File datei = Util.getLokaleOutputDatei();
 		assertNotNull(datei);
-		assertEquals("flugdaten-2015-01.log", datei.getName());
-		assertEquals("/Users/thomaswenzlaff/Java-Projekt/tw/TWFlug/flugdaten-2015-01.log", datei.getAbsolutePath());
-		// assertEquals(true, datei.isFile());
+		assertEquals("flugdaten-2015-03.log", datei.getName());
+		assertEquals("/Users/thomaswenzlaff/Java-Projekt/tw/TWFlug/flugdaten-2015-03.log", datei.getAbsolutePath());
+	}
+
+	@Test
+	public void testGetEntfernteOutputDatei() {
+		File datei = Util.getEntfernteOutputDatei();
+		assertNotNull(datei);
+		assertEquals("flugdaten-2015-03.log", datei.getName());
+		assertEquals("/home/pi/fhem/log/flugdaten-2015-03.log", datei.getAbsolutePath());
 	}
 
 	@Test(expected = IllegalArgumentException.class)

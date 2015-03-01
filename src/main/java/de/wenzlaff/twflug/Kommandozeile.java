@@ -56,9 +56,6 @@ public class Kommandozeile {
 		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with (default: 600)").hasArg().create("width"));
 		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight (default: 600)").hasArg().create("height"));
 
-		options.addOption(OptionBuilder.withArgName("outputfile").hasArg().withDescription("use given file for DUMP output (default: flugdaten-YYYY-MM.log) ")
-				.withLongOpt("outputfile").create("o"));
-
 		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms (default: 300000 ms = 5 Minuten)").hasArg().create("r"));
 
 		options.addOption(OptionBuilder.withLongOpt("copy-time").withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
@@ -68,8 +65,6 @@ public class Kommandozeile {
 		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination").hasArg().create("dip"));
 		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("duser"));
 		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("dpsw"));
-		options.addOption(OptionBuilder.withArgName("ziel-datei").hasArg()
-				.withDescription("destination file name (default: /home/pi/fhem/log/flugdaten-YYYY-MM.log) ").withLongOpt("ziel-datei").create("dd"));
 
 		Parameter parameter = new Parameter();
 
@@ -108,25 +103,6 @@ public class Kommandozeile {
 			} else {
 				// default ziel IP
 				parameter.setZielIp("pi-home");
-			}
-
-			// Ausgabe Datei setzen
-			if (line.hasOption("o")) {
-				// wenn Ausgabe Datei angegeben
-				parameter.setOutputDatei(line.getOptionValue("o"));
-			} else {
-				// default Ausgabe Datei
-				parameter.setOutputDatei(Util.getOutputDatei());
-			}
-
-			// Ziel Datei setzen
-			if (line.hasOption("dd")) {
-				// wenn Ausgabe Datei angegeben
-				parameter.setZielDatei(line.getOptionValue("dd"));
-			} else {
-				// default Ziel Datei
-				String zielDatei = "/home/pi/fhem/log/" + Util.getOutputDatei();
-				parameter.setZielDatei(zielDatei);
 			}
 
 			parameter.setRefreshTime(line.getOptionValue("r"));

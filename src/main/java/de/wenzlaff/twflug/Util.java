@@ -24,6 +24,11 @@ import de.wenzlaff.twflug.be.Parameter;
  */
 public class Util {
 
+	/**
+	 * Verzeichnis für die Ziel Datei auf dem entfernten Rechner.
+	 */
+	private static final String ENTFERNTER_PFAD = "/home/pi/fhem/log/";
+
 	private static final Logger LOG = LogManager.getLogger(Util.class.getName());
 
 	private static final DateTimeFormatter ZEITSTEMPEL_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss");
@@ -93,13 +98,25 @@ public class Util {
 	 * 
 	 * @return der Dateiname für die Output Datei.
 	 */
-	public static File getOutputDatei() {
+	public static File getLokaleOutputDatei() {
 
 		LocalDate heute = LocalDate.now();
 		final String jahrMonat = ZEITSTEMPEL_FORMAT_JAHR.format(heute);
 		final String dateiName = DATEINAME_FLUGDATEN + jahrMonat + DATEINAME_EXTENSION_FLUGDATEN;
 		File dateiname = new File(dateiName);
 		return dateiname;
+	}
+
+	/**
+	 * Liefert die Zieldatei mit Path auf dem Entfernten Rechner. Ist jeden Monat eine neue Datei.
+	 * 
+	 * @return der Zielpath und Name
+	 */
+	public static File getEntfernteOutputDatei() {
+
+		String zielDatei = ENTFERNTER_PFAD + Util.getLokaleOutputDatei();
+		final File entfernteOutputDatei = new File(zielDatei);
+		return entfernteOutputDatei;
 	}
 
 	private static String getZeitstempel() {
@@ -125,16 +142,16 @@ public class Util {
 			throw new IllegalArgumentException("Die FlugInfos oder/und die Parameter sind null");
 		}
 
-		final File outputDatei = parameter.getOutputDatei();
+		File entfernteOutputDatei = getEntfernteOutputDatei();
 
 		final String zeitstempel = getZeitstempel();
 		final String zeile = zeitstempel + " flugdaten anzahl: " + flugzeuge.getMaxAnzahlFlugzeuge() + System.getProperty("line.separator");
 
 		try {
-			FileUtils.writeStringToFile(outputDatei, zeile, true);
+			FileUtils.writeStringToFile(entfernteOutputDatei, zeile, true);
 			if (parameter.isDebug()) {
 				if (LOG.isInfoEnabled()) {
-					LOG.info("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+					LOG.info("Daten in " + entfernteOutputDatei + " Datei geschrieben: " + zeile);
 				}
 			}
 		} catch (IOException e) {
@@ -158,16 +175,16 @@ public class Util {
 			throw new IllegalArgumentException("Die FlugInfosProTag oder/und die Parameter sind null");
 		}
 
-		final File outputDatei = parameter.getOutputDatei();
+		final File lokaleOutputDatei = getLokaleOutputDatei();
 
 		final String zeitstempel = getZeitstempel();
 		final String zeile = zeitstempel + " flugdaten summe-pro-tag: " + flugzeuge.getAnzahlFlugzeugeProTag() + System.getProperty("line.separator");
 
 		try {
-			FileUtils.writeStringToFile(outputDatei, zeile, true);
+			FileUtils.writeStringToFile(lokaleOutputDatei, zeile, true);
 			if (parameter.isDebug()) {
 				if (LOG.isInfoEnabled()) {
-					LOG.info("Daten in " + outputDatei + " Datei geschrieben: " + zeile);
+					LOG.info("Daten in " + lokaleOutputDatei + " Datei geschrieben: " + zeile);
 				}
 			}
 		} catch (IOException e) {

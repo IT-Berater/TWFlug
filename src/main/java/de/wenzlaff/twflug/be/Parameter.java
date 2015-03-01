@@ -35,9 +35,6 @@ public class Parameter {
 	/** Wenn true, wird keine GUI angezeigt. */
 	private boolean isNoGui;
 
-	/** Die Ausgabedatei mit dem Ergebnis bzw. der Anzahl der Flugzeuge. */
-	private File outputDatei;
-
 	/** Die Refresch Zeit für das schreiben der Daten in die Übergabe Datei in ms. */
 	private int refreshTime = 1000 * 60 * 5;
 
@@ -52,9 +49,6 @@ public class Parameter {
 
 	/** Wenn true, wird die Ausgabedatei auf ein neues Ziel kopiert. */
 	private boolean isCopy;
-
-	/** Der Zieldatei Name wenn kopiert wird. */
-	private File zielDatei;
 
 	/** Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert. Da wo Fhem läuft. */
 	private String zielIp;
@@ -119,22 +113,6 @@ public class Parameter {
 
 	public void setDebug(boolean isDebug) {
 		this.isDebug = isDebug;
-	}
-
-	public File getOutputDatei() {
-		return outputDatei;
-	}
-
-	public void setOutputDatei(File outputDatei) {
-		if (outputDatei != null) {
-			this.outputDatei = outputDatei;
-		}
-	}
-
-	public void setOutputDatei(String outputDatei) {
-		if (outputDatei != null) {
-			this.outputDatei = new File(outputDatei);
-		}
 	}
 
 	public void setNoGui(boolean isNoGui) {
@@ -233,20 +211,6 @@ public class Parameter {
 		this.isCopy = isCopy;
 	}
 
-	public File getZielDatei() {
-		return zielDatei;
-	}
-
-	public void setZielDatei(File zielDatei) {
-		this.zielDatei = zielDatei;
-	}
-
-	public void setZielDatei(String zielDatei) {
-		if (zielDatei != null) {
-			this.zielDatei = new File(zielDatei);
-		}
-	}
-
 	public String getZielIp() {
 		return zielIp;
 	}
@@ -321,11 +285,6 @@ public class Parameter {
 		builder.append(", isNoGui=");
 		builder.append(isNoGui);
 		builder.append(", ");
-		if (outputDatei != null) {
-			builder.append("outputDatei=");
-			builder.append(outputDatei);
-			builder.append(", ");
-		}
 		builder.append("refreshTime=");
 		builder.append(refreshTime);
 		builder.append(", maxCount=");
@@ -337,11 +296,6 @@ public class Parameter {
 		builder.append(", isCopy=");
 		builder.append(isCopy);
 		builder.append(", ");
-		if (zielDatei != null) {
-			builder.append("zielDatei=");
-			builder.append(zielDatei);
-			builder.append(", ");
-		}
 		if (zielIp != null) {
 			builder.append("zielIp=");
 			builder.append(zielIp);
