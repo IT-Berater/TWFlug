@@ -142,16 +142,16 @@ public class Util {
 			throw new IllegalArgumentException("Die FlugInfos oder/und die Parameter sind null");
 		}
 
-		File entfernteOutputDatei = getEntfernteOutputDatei();
+		File lokaleOutputDatei = getLokaleOutputDatei();
 
 		final String zeitstempel = getZeitstempel();
 		final String zeile = zeitstempel + " flugdaten anzahl: " + flugzeuge.getMaxAnzahlFlugzeuge() + System.getProperty("line.separator");
 
 		try {
-			FileUtils.writeStringToFile(entfernteOutputDatei, zeile, true);
+			FileUtils.writeStringToFile(lokaleOutputDatei, zeile, true);
 			if (parameter.isDebug()) {
 				if (LOG.isInfoEnabled()) {
-					LOG.info("Daten in " + entfernteOutputDatei + " Datei geschrieben: " + zeile);
+					LOG.info("Daten in " + lokaleOutputDatei + " Datei geschrieben: " + zeile);
 				}
 			}
 		} catch (IOException e) {
