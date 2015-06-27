@@ -3,7 +3,6 @@ package de.wenzlaff.twflug;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -17,18 +16,16 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
-import de.wenzlaff.twflug.be.Position;
-import de.wenzlaff.twflug.be.TestPositionen;
 
 /**
  * Der Grafik Frame für die empfangenen Flugzeuge.
  * 
- * http://stackoverflow.com/questions/7205742/adding-points-to-xyseries- dynamically-with-jfreechart
+ * http://stackoverflow.com/questions/7205742/adding-points-to-xyseries-
+ * dynamically-with-jfreechart
  * 
- * http://www.codejava.net/java-se/graphics/using-jfreechart-to-draw-xy-line- chart-with-xydataset
+ * http://www.codejava.net/java-se/graphics/using-jfreechart-to-draw-xy-line-
+ * chart-with-xydataset
  * 
  * 
  * @author Thomas Wenzlaff
@@ -70,8 +67,8 @@ public class GrafikFrame extends JFrame {
 
 	private ChartPanel createPanel() {
 
-		JFreeChart jfreechart = ChartFactory.createXYLineChart("Flugzeuge", "Langitude (Breitengrade, x)", "Longitude (Längengrade, y)", getData(),
-				PlotOrientation.VERTICAL, false, true, false);
+		JFreeChart jfreechart = ChartFactory.createXYLineChart("Flugzeuge", "Langitude (Breitengrade, x)",
+				"Longitude (Längengrade, y)", getData(), PlotOrientation.VERTICAL, false, true, false);
 
 		XYPlot xyPlot = (XYPlot) jfreechart.getPlot();
 		xyPlot.setDomainCrosshairVisible(true);
@@ -86,19 +83,21 @@ public class GrafikFrame extends JFrame {
 
 		xySeriesCollection = new XYSeriesCollection();
 
-		TestPositionen t = new TestPositionen();
-		List<Position> testPos = t.getPositionen();
-
-		for (int i = 0; i < testPos.size(); i++) {
-
-			XYSeries series = new XYSeries(i);
-
-			double x = testPos.get(i).getLatitude();
-			double y = testPos.get(i).getLongitude();
-			series.add(x, y);
-			series.add(TestPositionen.HOME.getLatitude(), TestPositionen.HOME.getLongitude());
-			xySeriesCollection.addSeries(series);
-		}
+		// DIE REFERENZ in das Testpackage baut nicht
+		// TestPositionen t = new TestPositionen();
+		// List<Position> testPos = t.getPositionen();
+		//
+		// for (int i = 0; i < testPos.size(); i++) {
+		//
+		// XYSeries series = new XYSeries(i);
+		//
+		// double x = testPos.get(i).getLatitude();
+		// double y = testPos.get(i).getLongitude();
+		// series.add(x, y);
+		// series.add(TestPositionen.HOME.getLatitude(),
+		// TestPositionen.HOME.getLongitude());
+		// xySeriesCollection.addSeries(series);
+		// }
 
 		return xySeriesCollection;
 	}
