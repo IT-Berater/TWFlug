@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 import de.wenzlaff.twflug.action.AnzahlProTagAction;
 import de.wenzlaff.twflug.action.CopyAction;
 import de.wenzlaff.twflug.action.EmergencyAction;
+import de.wenzlaff.twflug.action.ThingSpeakAction;
 import de.wenzlaff.twflug.action.WriteAction;
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FieldDataRaw.EMERGENCY;
@@ -69,7 +70,9 @@ public class Client {
 	/** 1 Minute Verzögerungszeit in ms. */
 	private static final int DELAY = 1000 * 60;
 
-	/** Alle Flugzeug Infos werden hier gehalten. Wird in intervallen wieder auf 0 zurückgesetzt für die aktualisierungen. */
+	/**
+	 * Alle Flugzeug Infos werden hier gehalten. Wird in intervallen wieder auf 0 zurückgesetzt für die aktualisierungen.
+	 */
 	private FlugInfos flugzeuge;
 
 	/** Objekt für die Ermittlung der Anzahl der Flugzeuge pro Tag. */
@@ -108,6 +111,8 @@ public class Client {
 
 		startAnzahlProTagTimer();
 
+		startThingSpeakTimer();
+
 		while (true) {
 
 			try {
@@ -134,7 +139,8 @@ public class Client {
 					}
 				}
 			} catch (Exception e) {
-				// LOG.error("Error in Message loop. " + e.getLocalizedMessage(), e);
+				// LOG.error("Error in Message loop. " +
+				// e.getLocalizedMessage(), e);
 			}
 		}
 	}
@@ -172,7 +178,15 @@ public class Client {
 		Long mitternacht = LocalDateTime.now().until(LocalDate.now().plusDays(1).atStartOfDay(), ChronoUnit.MINUTES);
 		scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), mitternacht, 1440, TimeUnit.MINUTES);
 		// Todo: zum testen alle 10 Sekunden
-		// scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag, parameter), 1, 10, TimeUnit.SECONDS);
+		// scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag,
+		// parameter), 1, 10, TimeUnit.SECONDS);
+	}
+
+	private void startThingSpeakTimer() {
+		// Timer für ThingSpeak Service starten
+		Timer timer = new Timer("ThingSpeakServiceAction");
+		// nach DELAY/2 (einer Minute/2) und dann jede ms (10 Minute), run() aufrufen
+		timer.schedule(new ThingSpeakAction(flugzeuge, parameter), DELAY / 2, parameter.getSendToThingSpeakTime());
 	}
 
 }
