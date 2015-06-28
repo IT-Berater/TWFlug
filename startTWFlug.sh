@@ -1,1 +1,1 @@
-java -jar twflug.jar -n --copy --ip pi-bplus --copy --ziel-ip pi-home --ziel-user pi --ziel-passwort PASSWORT  &
+java -jar twflug.jar -n --copy --ip pi-bplus --copy --ziel-ip pi-home --ziel-user pi --ziel-passwort twtwtwtw --thing-speak-channel-id 44177 --thing-speak-api-write-key TKCAVQ7HJ2XDPP3G &
