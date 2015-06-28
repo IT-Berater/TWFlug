@@ -35,22 +35,37 @@ public class Parameter {
 	/** Wenn true, wird keine GUI angezeigt. */
 	private boolean isNoGui;
 
-	/** Die Refresch Zeit für das schreiben der Daten in die Übergabe Datei in ms. */
+	/**
+	 * Die Refresch Zeit für das schreiben der Daten in die Übergabe Datei in
+	 * ms.
+	 */
 	private int refreshTime = 1000 * 60 * 5;
 
 	/** Die maximal angezeigten Flugzeuge in der GUI. */
 	private int maxCount = 50;
 
-	/** Die minimal angezeigten Flugzeuge in der GUI. Startet normalerweise mit 0. */
+	/**
+	 * Die minimal angezeigten Flugzeuge in der GUI. Startet normalerweise mit
+	 * 0.
+	 */
 	private int minCount = 0;
 
-	/** Die Zeit des Intervalls im ms, nach dem die Datendatei (Übergabedatei) auf das Zielsystem kopiert wird. */
+	/**
+	 * Die Zeit des Intervalls im ms, nach dem die Datendatei (Übergabedatei)
+	 * auf das Zielsystem kopiert wird.
+	 */
 	private int copyTime = 1000 * 60 * 60;
+
+	/** Alle 10 Minuten wird der Web-Service ThingSpeak aktualisiert. */
+	private long sentToThingSpeakTime = 1000 * 60 * 60 * 10;
 
 	/** Wenn true, wird die Ausgabedatei auf ein neues Ziel kopiert. */
 	private boolean isCopy;
 
-	/** Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert. Da wo Fhem läuft. */
+	/**
+	 * Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert.
+	 * Da wo Fhem läuft.
+	 */
 	private String zielIp;
 	/** Der User für das kopieren auf das Zielsystem. */
 	private String zielUser;
@@ -62,6 +77,12 @@ public class Parameter {
 
 	private File ssh_known_hosts;
 	private String ssh_id_rsa;
+
+	/** Der lese Key für den ThingSpeak Web-Service. */
+	private String thingSpeakApiWriteKey;
+
+	/** Die Channel ID für den ThingSpeak Web-Service. */
+	private Integer thingSpeakChannelId;
 
 	public Parameter() {
 		super();
@@ -203,6 +224,10 @@ public class Parameter {
 		this.copyTime = copyTime;
 	}
 
+	public long getSendToThingSpeakTime() {
+		return this.sentToThingSpeakTime;
+	}
+
 	public boolean isCopy() {
 		return isCopy;
 	}
@@ -263,6 +288,22 @@ public class Parameter {
 
 	public void setSsh_id_rsa(String ssh_id_rsa) {
 		this.ssh_id_rsa = ssh_id_rsa;
+	}
+
+	public String getThingSpeakApiWriteKey() {
+		return this.thingSpeakApiWriteKey;
+	}
+
+	public Integer getThingSpeakChannelId() {
+		return this.thingSpeakChannelId;
+	}
+
+	public void setThingSpeakApiWriteKey(String thingSpeakApiWriteKey) {
+		this.thingSpeakApiWriteKey = thingSpeakApiWriteKey;
+	}
+
+	public void setThingSpeakChannelId(Integer thingSpeakChannelId) {
+		this.thingSpeakChannelId = thingSpeakChannelId;
 	}
 
 	@Override
