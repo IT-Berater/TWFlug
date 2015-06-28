@@ -1,5 +1,6 @@
 package de.wenzlaff.twflug.action;
 
+import java.util.Date;
 import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +34,8 @@ public class ThingSpeakAction extends TimerTask {
 	@Override
 	public void run() {
 		try {
-			ServiceThingSpeak.send("" + flugzeuge.getMaxAnzahlFlugzeuge(), parameter.getThingSpeakApiWriteKey(), parameter.getThingSpeakChannelId());
+			String nachricht = "Update: " + flugzeuge.getMaxAnzahlFlugzeuge() + " Flugzeuge erfasst am " + new Date(System.currentTimeMillis());
+			ServiceThingSpeak.send("" + flugzeuge.getMaxAnzahlFlugzeuge(), parameter.getThingSpeakApiWriteKey(), parameter.getThingSpeakChannelId(), nachricht);
 		} catch (Exception e) {
 			System.err.println(e);
 			LOG.error(e.getMessage());
