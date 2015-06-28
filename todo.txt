@@ -1,17 +1,30 @@
+Version 0.1.0
+27.06.2015 Daten nun nach ThingSpeak senden, neue Parameter ergänzt
 
+01.03.2015 Fix bei Datumswechsel, es wird nun immer die ermittelte Datei verwendet. 
+Parameter für Ziel entfernt
+
+01.02.2015 Fix IndexOutOfBound mit neuer isDataValid Methode
+
+
+17.1.15 Versions Nr. nicht verändert, aber veröffentlicht
+
+-Logeintrag mit Summe der Flugzeuge pro Tag
+-Neues Action Package
+-Log bei Notfall in Log und sysout
 
 01.01.15 auf JDK 1.8. neue Time API
 
 29.12.14 Fix Jahreszahl mit gleicher Version hochgeladen
 
-TODO:
+25.12.14 Version 0.1.0 veröffentlicht
 
+
+TODO:
+-Senden der Daten an Statistik Seite im Internet
+-Zielpfad als Parameter übergeben
 -java -h Target läuft nur mit option i
 -keine POM in twflug.jar
 -neue Time Api verwenden
--bei SWACK 7700 logeintrag
--Flugzeuge pro Tag speichern
 -Radar Stern Diagramm
-
-
-25.12.2014 Version 0.1.0 veröffentlicht
+-Ref. Abstr. Klasse für FlugInfos
