@@ -36,8 +36,7 @@ public class Parameter {
 	private boolean isNoGui;
 
 	/**
-	 * Die Refresch Zeit für das schreiben der Daten in die Übergabe Datei in
-	 * ms.
+	 * Die Refresch Zeit für das schreiben der Daten in die Übergabe Datei in ms.
 	 */
 	private int refreshTime = 1000 * 60 * 5;
 
@@ -45,26 +44,23 @@ public class Parameter {
 	private int maxCount = 50;
 
 	/**
-	 * Die minimal angezeigten Flugzeuge in der GUI. Startet normalerweise mit
-	 * 0.
+	 * Die minimal angezeigten Flugzeuge in der GUI. Startet normalerweise mit 0.
 	 */
 	private int minCount = 0;
 
 	/**
-	 * Die Zeit des Intervalls im ms, nach dem die Datendatei (Übergabedatei)
-	 * auf das Zielsystem kopiert wird.
+	 * Die Zeit des Intervalls im ms, nach dem die Datendatei (Übergabedatei) auf das Zielsystem kopiert wird.
 	 */
 	private int copyTime = 1000 * 60 * 60;
 
-	/** Alle 10 Minuten wird der Web-Service ThingSpeak aktualisiert. */
-	private long sentToThingSpeakTime = 1000 * 60 * 60 * 10;
+	/** Alle 5 Minuten wird der Web-Service ThingSpeak aktualisiert. */
+	private long sentToThingSpeakTime = 1000 * 60 * 5;
 
 	/** Wenn true, wird die Ausgabedatei auf ein neues Ziel kopiert. */
 	private boolean isCopy;
 
 	/**
-	 * Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert.
-	 * Da wo Fhem läuft.
+	 * Die IP des Zielrechners Auf diesen Rechner wird die Datendatei kopiert. Da wo Fhem läuft.
 	 */
 	private String zielIp;
 	/** Der User für das kopieren auf das Zielsystem. */
