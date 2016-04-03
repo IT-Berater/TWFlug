@@ -29,6 +29,14 @@
 		<url>http://www.wenzlaff.de</url>
 	</organization>
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
@@ -41,11 +49,6 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.3.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jfree</groupId>
@@ -82,18 +85,11 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.0-alpha4</version>
-		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.3.1</version>
 		</dependency>
-		<!-- Unirest-java -->
 		<dependency>
 			<groupId>com.mashape.unirest</groupId>
 			<artifactId>unirest-java</artifactId>
@@ -130,8 +126,7 @@
 
 	<build>
 		<finalName>twflug</finalName>
-		<plugins>
-			<!-- download source code in Eclipse, best practice -->
+		<plugins>			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -156,6 +151,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
 				<configuration>
 					<excludes>
 						<exclude>**/log4j2.xml</exclude>
@@ -183,8 +179,7 @@
 						<goals>
 							<goal>copy-dependencies</goal>
 						</goals>
-						<configuration>
-							<!-- exclude junit, we need runtime dependency only -->
+						<configuration>						
 							<includeScope>runtime</includeScope>
 							<outputDirectory>${project.build.directory}/lib/</outputDirectory>
 						</configuration>
@@ -210,10 +205,46 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>license-maven-plugin</artifactId>
+					<version>1.8</version>
+
+					<configuration>				
+						<licenseName>apache_v2</licenseName>						
+						<roots>
+							<root>src/main/java</root>
+							<root>src/main/resources</root>
+							<root>src/test</root>
+						</roots>
+					
+						<useMissingFile>true</useMissingFile>
+		
+						<licenseMerges> <licenseMerge>Apache License, Version 2.0|The 
+							Apache Software License, Version 2.0</licenseMerge> </licenseMerges>
+					</configuration>
+
+					<executions>
+						<execution>
+							<id>first</id>
+							<goals>
+								<!-- updates the source's headers according to the specified license -->
+								<!-- <goal>update-file-header</goal> -->
+
+								<!-- Adds the full-blown licensefile to the final product -->
+								<!-- <goal>update-project-license</goal> -->
+
+								<!-- generate and add a list of third-party licenses -->
+								<!-- <goal>add-third-party</goal> -->
+							</goals>
+							<phase>process-sources</phase>
+						</execution>
+					</executions>
+				</plugin>
 		</plugins>
 	</build>
-	<!-- ************************* Reporting ab hier ********************************************* -->
-
+	
 	<reporting>
 		<plugins>
 			<plugin>
