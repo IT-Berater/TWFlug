@@ -1,30 +1,5 @@
 package de.wenzlaff.twflug;
 
-/*
- * #%L
- * twflug
- * %%
- * Copyright (C) 2015 Thomas Wenzlaff
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
-import com.angryelectron.thingspeak.Channel;
-import com.angryelectron.thingspeak.Entry;
-import com.angryelectron.thingspeak.ThingSpeakException;
-import com.mashape.unirest.http.exceptions.UnirestException;
-
 /**
  * https://github.com/angryelectron/thingspeak-java/
  * 
@@ -68,21 +43,22 @@ public class ServiceThingSpeak {
 		if (args != null) {
 			status = args[3];
 		}
-
-		send(anzahlFlugzeuge, apiWriteKey, channelId, status);
+		// TODO: Entfernt, da ThingSpeak Client nicht auf Maven Central https://github.com/angryelectron/thingspeak-java
+		// send(anzahlFlugzeuge, apiWriteKey, channelId, status);
 	}
 
-	public static void send(String anzahlFlugzeuge, String apiWriteKey, Integer channelId, String status) throws UnirestException, ThingSpeakException {
-
-		Channel channel = new Channel(channelId, apiWriteKey);
-
-		Entry entry = new Entry();
-		entry.setField(1, anzahlFlugzeuge);
-		entry.setStatus(status);
-		System.out.println(status);
-		channel.update(entry);
-
-		System.out.println("Update ok");
-	}
+	// public static void send(String anzahlFlugzeuge, String apiWriteKey, Integer channelId, String status) throws UnirestException, ThingSpeakException {
+	//
+	// // TODO: Entfernt, da ThingSpeak Client nicht auf Maven Central https://github.com/angryelectron/thingspeak-java
+	// Channel channel = new Channel(channelId, apiWriteKey);
+	//
+	// Entry entry = new Entry();
+	// entry.setField(1, anzahlFlugzeuge);
+	// entry.setStatus(status);
+	// System.out.println(status);
+	// channel.update(entry);
+	//
+	// System.out.println("Update ok");
+	// }
 
 }

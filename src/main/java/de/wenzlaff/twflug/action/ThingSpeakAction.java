@@ -26,7 +26,6 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.wenzlaff.twflug.ServiceThingSpeak;
 import de.wenzlaff.twflug.be.FlugInfos;
 import de.wenzlaff.twflug.be.Parameter;
 
@@ -55,7 +54,8 @@ public class ThingSpeakAction extends TimerTask {
 	public void run() {
 		try {
 			String nachricht = "Update: " + flugzeuge.getMaxAnzahlFlugzeuge() + " Flugzeuge erfasst am " + new Date(System.currentTimeMillis());
-			ServiceThingSpeak.send("" + flugzeuge.getMaxAnzahlFlugzeuge(), parameter.getThingSpeakApiWriteKey(), parameter.getThingSpeakChannelId(), nachricht);
+			// TODO: Entfernt, da ThingSpeak Client nicht auf Maven Central https://github.com/angryelectron/thingspeak-java
+			// ServiceThingSpeak.send("" + flugzeuge.getMaxAnzahlFlugzeuge(), parameter.getThingSpeakApiWriteKey(), parameter.getThingSpeakChannelId(), nachricht);
 		} catch (Exception e) {
 			System.err.println(e);
 			LOG.error(e.getMessage());

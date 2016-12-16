@@ -148,13 +148,13 @@
 			<version>${junit.vintage.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- aus dem lokalen Repo -->
+		<!-- aus dem lokalen Repo
 		<dependency>
 			<groupId>thingspeak</groupId>
 			<artifactId>thingspeak</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		
+		 -->
 	</dependencies>
 
 	<build>
