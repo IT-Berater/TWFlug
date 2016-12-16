@@ -4,11 +4,12 @@
 
 	<groupId>de.wenzlaff.twflug</groupId>
 	<artifactId>de.wenzlaff.twflug</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>twflug</name>
 	<url>http://www.wenzlaff.info</url>
+	<description>TWFlug Anwendung zum anzeigen der Menge der Flugzeuge</description>
 
 	<inceptionYear>2015</inceptionYear>
 	
@@ -367,7 +368,6 @@
 				</dependencies>
 			</plugin>
 			
-			<!--  
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -393,7 +393,6 @@
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
--->
 
 		</plugins>
 	</build>
