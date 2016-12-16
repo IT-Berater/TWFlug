@@ -2,15 +2,27 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.wenzlaff</groupId>
-	<artifactId>twflug</artifactId>
+	<groupId>de.wenzlaff.twflug</groupId>
+	<artifactId>de.wenzlaff.twflug</artifactId>
 	<version>0.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>twflug</name>
-	<url>http://www.wenzlaff.de</url>
+	<url>http://www.wenzlaff.info</url>
 
 	<inceptionYear>2015</inceptionYear>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
 	<developers>
 		<developer>
 			<id>thomas.wenzlaff</id>
