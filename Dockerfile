@@ -1,5 +1,5 @@
 FROM java:7
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
-RUN javac Main.java
+COPY . /usr/src/twflug
+WORKDIR /usr/src/twflug
+RUN javac src/main/java/de/wenzlaff/twflug/TWFlug.java
 CMD ["java", "Main"]
