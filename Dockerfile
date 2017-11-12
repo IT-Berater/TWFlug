@@ -1,4 +1,4 @@
-FROM resin/raspberry-pi-alpine-openjdk:8
+FROM itberater/twflug
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
 RUN javac Main.java
