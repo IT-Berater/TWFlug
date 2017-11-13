@@ -1,5 +1,5 @@
-# Verwende das letzte Debian Package:
-FROM debian:latest 
+# Verwende das folgende Debian Package:
+FROM debian:9.2 
 
 # Meine Kontakt Daten;
 MAINTAINER Thomas Wenzlaff, Langenhagen, Germany, info-anfrage@wenzlaff.de
@@ -23,3 +23,6 @@ RUN apt-get update && apt-get install -y \
   
 # Update aller vorhandener Packages
 RUN apt-get update && apt-get upgrade -y
+
+# Starte die bash
+CMD ["/bin/bash"]
