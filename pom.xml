@@ -4,7 +4,7 @@
 
 	<groupId>de.wenzlaff.twflug</groupId>
 	<artifactId>de.wenzlaff.twflug</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>jar</packaging>
 
 	<name>twflug</name>
@@ -53,10 +53,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
-		<junit.version>4.12</junit.version>			
-		<junit.jupiter.version>5.0.0-M2</junit.jupiter.version>
-		<junit.vintage.version>4.12.0-M2</junit.vintage.version>
-		<junit.platform.version>1.0.0-M2</junit.platform.version>
 	</properties>
 
 	<scm>
@@ -65,13 +61,20 @@
 		<url>https://github.com/IT-Berater/twflug</url>
 	</scm>
 	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>5.6.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>		
+		</dependencies>
+	</dependencyManagement>
+	
+	
 	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.jfree</groupId>
 			<artifactId>jfreechart</artifactId>
@@ -140,13 +143,11 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.vintage</groupId>
 			<artifactId>junit-vintage-engine</artifactId>
-			<version>${junit.vintage.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- aus dem lokalen Repo
@@ -181,17 +182,7 @@
 				</configuration>
 			</plugin>
 			
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.junit.platform</groupId>
-						<artifactId>junit-platform-surefire-provider</artifactId>
-						<version>${junit.platform.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			
 
 			<!-- Make this jar executable -->
 			<plugin>
@@ -301,19 +292,7 @@
 					<check />
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-					<check />
-				</configuration>
-			</plugin>
-		
+					
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -355,18 +334,7 @@
 					<check />
 				</configuration>
 			</plugin>
-			
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.junit.platform</groupId>
-						<artifactId>junit-platform-surefire-provider</artifactId>
-						<version>${junit.platform.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+						
 <!--  			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

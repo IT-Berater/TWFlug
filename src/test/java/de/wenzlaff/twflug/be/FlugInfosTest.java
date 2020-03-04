@@ -1,5 +1,11 @@
 package de.wenzlaff.twflug.be;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 /*
  * #%L
  * twflug
@@ -20,17 +26,11 @@ package de.wenzlaff.twflug.be;
  * #L%
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Before;
-import org.junit.Test;
-
 public class FlugInfosTest {
 
 	private FlugInfos flugInfo;
 
-	@Before
+	@BeforeAll
 	public void setUp() {
 		flugInfo = new FlugInfos();
 	}

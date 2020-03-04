@@ -25,18 +25,17 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import de.wenzlaff.twflug.be.FieldDataRaw;
-import de.wenzlaff.twflug.be.FlugInfos;
-import de.wenzlaff.twflug.be.Parameter;
 
 public class UtilTest {
 
 	@Test
 	public void testGetFieldData() {
 
-		// Test Feld:--1--,2,-3-,--4--,--5---,--6---,------7---,-----8------,----9-----,-----10-----,--11----,-12-
+		// Test
+		// Feld:--1--,2,-3-,--4--,--5---,--6---,------7---,-----8------,----9-----,-----10-----,--11----,-12-
 		String data = "MSG,5,111,11111,3C6DCF,111111,2014/11/10,17:20:57.552,2014/11/10,17:20:57.543,GWI53X  ,28275,,,,,,,0,,0,0";
 		FieldDataRaw raw = Util.getFieldData(data);
 		assertNotNull(raw);
@@ -53,16 +52,6 @@ public class UtilTest {
 		assertEquals("17:20:57.543", raw.getTimeMessageLogged()); // 10
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetFieldDataLeer() {
-		Util.getFieldData("");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testGetFieldDataNull() {
-		Util.getFieldData(null);
-	}
-
 	@Test
 	public void testGetOutputDatei() {
 		File datei = Util.getLokaleOutputDatei();
@@ -75,13 +64,6 @@ public class UtilTest {
 		File datei = Util.getEntfernteOutputDatei();
 		assertNotNull(datei);
 		assertEquals(false, datei.getName().isEmpty());
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testWriteFlugdaten() {
-		FlugInfos flugzeuge = null;
-		Parameter parameter = null;
-		Util.writeFlugdaten(flugzeuge, parameter);
 	}
 
 }
