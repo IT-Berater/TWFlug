@@ -39,18 +39,20 @@ import de.wenzlaff.twflug.be.Parameter;
  * 
  * or
  * 
- * If you put that line into /etc/profile (or ~/.bashrc) it'll set it automatically at startup / when you log in.
+ * If you put that line into /etc/profile (or ~/.bashrc) it'll set it
+ * automatically at startup / when you log in.
  * 
  * @author Thomas Wenzlaff
- * @version 0.1
- * @since 21.12.2014
  */
 public class TWFlug {
 
 	static {
 		System.setProperty(XmlConfigurationFactory.CONFIGURATION_FILE_PROPERTY, "./log4j2.xml");
 	}
-	/** Log4j2 siehe http://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration */
+	/**
+	 * Log4j2 siehe
+	 * http://logging.apache.org/log4j/2.x/manual/configuration.html#AutomaticConfiguration
+	 */
 	private static final Logger LOG = LogManager.getLogger(TWFlug.class.getName());
 
 	/**

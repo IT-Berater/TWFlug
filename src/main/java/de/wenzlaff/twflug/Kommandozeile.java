@@ -1,25 +1,5 @@
 package de.wenzlaff.twflug;
 
-/*
- * #%L
- * twflug
- * %%
- * Copyright (C) 2015 Thomas Wenzlaff
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -37,8 +17,6 @@ import de.wenzlaff.twflug.be.Parameter;
  * Die Verarbeitung der Kommandozeile.
  * 
  * @author Thomas Wenzlaff
- * @version 0.1
- * @since 11.11.2014
  */
 public class Kommandozeile {
 
@@ -67,40 +45,24 @@ public class Kommandozeile {
 		Option debug = new Option("d", "debug", false, "print debugging information (default: false)");
 		options.addOption(debug);
 
-		options.addOption(OptionBuilder.withLongOpt("ip").withDescription("ip adress from DUMP1090").hasArg()
-				.isRequired().create("i"));
-		options.addOption(OptionBuilder.withLongOpt("port").withDescription("port from DUMP1090 (default: 30003)")
-				.hasArg().create("p"));
+		options.addOption(OptionBuilder.withLongOpt("ip").withDescription("ip adress from DUMP1090").hasArg().isRequired().create("i"));
+		options.addOption(OptionBuilder.withLongOpt("port").withDescription("port from DUMP1090 (default: 30003)").hasArg().create("p"));
 
-		options.addOption(OptionBuilder.withLongOpt("max-count").withDescription("set max count value (default: 50)")
-				.hasArg().create("max"));
-		options.addOption(OptionBuilder.withLongOpt("min-count").withDescription("set min count value (default: 0) ")
-				.hasArg().create("min"));
+		options.addOption(OptionBuilder.withLongOpt("max-count").withDescription("set max count value (default: 50)").hasArg().create("max"));
+		options.addOption(OptionBuilder.withLongOpt("min-count").withDescription("set min count value (default: 0) ").hasArg().create("min"));
 
-		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with (default: 600)")
-				.hasArg().create("width"));
-		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight (default: 600)")
-				.hasArg().create("height"));
+		options.addOption(OptionBuilder.withLongOpt("window-width").withDescription("set window with (default: 600)").hasArg().create("width"));
+		options.addOption(OptionBuilder.withLongOpt("window-height").withDescription("set window hight (default: 600)").hasArg().create("height"));
 
-		options.addOption(OptionBuilder.withLongOpt("refresh-time")
-				.withDescription("refresh time in ms (default: 300000 ms = 5 Minuten)").hasArg().create("r"));
+		options.addOption(OptionBuilder.withLongOpt("refresh-time").withDescription("refresh time in ms (default: 300000 ms = 5 Minuten)").hasArg().create("r"));
 
-		options.addOption(OptionBuilder.withLongOpt("copy-time")
-				.withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
+		options.addOption(OptionBuilder.withLongOpt("copy-time").withDescription("copy time in Minuten (default: 60 Minuten)").hasArg().create("c"));
 
 		options.addOption("k", "copy", false, "copy output file to destination (default: false)");
 
-		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination")
-				.hasArg().create("dip"));
-		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi")
-				.hasArg().create("duser"));
-		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User")
-				.hasArg().create("dpsw"));
-
-		options.addOption(OptionBuilder.withLongOpt("thing-speak-channel-id")
-				.withDescription("channel ID for ThingSpeak").hasArg().create("channel"));
-		options.addOption(OptionBuilder.withLongOpt("thing-speak-api-write-key")
-				.withDescription("api write Key for ThingSpeak").hasArg().create("writekey"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-ip").withDescription("ip adress for copy destination").hasArg().create("dip"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-user").withDescription("destination User (default: pi").hasArg().create("duser"));
+		options.addOption(OptionBuilder.withLongOpt("ziel-passwort").withDescription("passwort from destination User").hasArg().create("dpsw"));
 
 		Parameter parameter = new Parameter();
 
@@ -148,13 +110,6 @@ public class Kommandozeile {
 			} else {
 				// default Channel
 				parameter.setThingSpeakChannelId(null);
-			}
-			if (line.hasOption("writekey")) {
-				// wenn Api Write Key gesetzt angegeben
-				parameter.setThingSpeakApiWriteKey(line.getOptionValue("writekey"));
-			} else {
-				// default Api Write Key
-				parameter.setThingSpeakApiWriteKey(null);
 			}
 
 			parameter.setRefreshTime(line.getOptionValue("r"));
@@ -204,5 +159,4 @@ public class Kommandozeile {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(ANWENDUNG_NAME, options);
 	}
-
 }

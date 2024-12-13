@@ -38,7 +38,6 @@ import org.apache.logging.log4j.Logger;
 import de.wenzlaff.twflug.action.AnzahlProTagAction;
 import de.wenzlaff.twflug.action.CopyAction;
 import de.wenzlaff.twflug.action.EmergencyAction;
-import de.wenzlaff.twflug.action.ThingSpeakAction;
 import de.wenzlaff.twflug.action.WriteAction;
 import de.wenzlaff.twflug.be.FieldDataRaw;
 import de.wenzlaff.twflug.be.FieldDataRaw.EMERGENCY;
@@ -76,7 +75,8 @@ import de.wenzlaff.twflug.gui.HauptFenster;
  * MSG,3,111,11111,3C6615,111111,2014/11/10,17:20:57.741,2014/11/10,17:20:57.740,,37000,,,52.66655,9.51055,,,,,,0
  * </pre>
  *
- * Format beschreibung hier: http://www.homepages.mcb.net/bones/SBS/Article/Barebones42_Socket_Data.htm
+ * Format beschreibung hier:
+ * http://www.homepages.mcb.net/bones/SBS/Article/Barebones42_Socket_Data.htm
  * 
  * @author Thomas Wenzlaff
  * @version 0.1
@@ -91,7 +91,8 @@ public class Client {
 	private static final int DELAY = 1000 * 60;
 
 	/**
-	 * Alle Flugzeug Infos werden hier gehalten. Wird in intervallen wieder auf 0 zurückgesetzt für die aktualisierungen.
+	 * Alle Flugzeug Infos werden hier gehalten. Wird in intervallen wieder auf 0
+	 * zurückgesetzt für die aktualisierungen.
 	 */
 	private FlugInfos flugzeuge;
 
@@ -130,8 +131,6 @@ public class Client {
 		startCopyTimer();
 
 		startAnzahlProTagTimer();
-
-		startThingSpeakTimer();
 
 		while (true) {
 
@@ -201,12 +200,4 @@ public class Client {
 		// scheduler.scheduleAtFixedRate(new AnzahlProTagAction(flugInfosProTag,
 		// parameter), 1, 10, TimeUnit.SECONDS);
 	}
-
-	private void startThingSpeakTimer() {
-		// Timer für ThingSpeak Service starten
-		Timer timer = new Timer("ThingSpeakServiceAction");
-		// nach DELAY/2 (einer Minute/2) und dann jede ms (10 Minute), run() aufrufen
-		timer.schedule(new ThingSpeakAction(flugzeuge, parameter), DELAY / 2, parameter.getSendToThingSpeakTime());
-	}
-
 }

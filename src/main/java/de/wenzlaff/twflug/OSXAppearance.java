@@ -22,33 +22,14 @@
 
 package de.wenzlaff.twflug;
 
-/*
- * #%L
- * twflug
- * %%
- * Copyright (C) 2015 Thomas Wenzlaff
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
-
 import java.awt.Image;
 import java.lang.reflect.Method;
 
 import javax.imageio.ImageIO;
 
 /**
- * On OS X, sets the demo to have a dock icon and a name in the menu bar. On other operating systems does nothing.
+ * On OS X, sets the demo to have a dock icon and a name in the menu bar. On
+ * other operating systems does nothing.
  * 
  * Anpassungen von:
  * 
@@ -64,7 +45,8 @@ public class OSXAppearance {
 
 		if (osName != null && osName.startsWith("Mac OS X")) {
 
-			// Set the dock icon using reflection so that no OS X specific classes are referenced - which would be a
+			// Set the dock icon using reflection so that no OS X specific classes are
+			// referenced - which would be a
 			// problem on other platforms
 			try {
 				Image dockIcon = ImageIO.read(OSXAppearance.class.getResource("/de/wenzlaff/twflug/gui/twflug.png"));
@@ -82,5 +64,4 @@ public class OSXAppearance {
 			}
 		}
 	}
-
 }
