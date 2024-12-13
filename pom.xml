@@ -1,22 +1,48 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.wenzlaff</groupId>
-	<artifactId>twflug</artifactId>
+	<groupId>de.wenzlaff.twflug</groupId>
+	<artifactId>de.wenzlaff.twflug</artifactId>
 	<version>0.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>twflug</name>
-	<url>http://www.wenzlaff.de</url>
+	<url>http://www.wenzlaff.info</url>
+	<description>TWFlug Anwendung zum anzeigen der Menge der Flugzeuge</description>
 
 	<inceptionYear>2015</inceptionYear>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>5.11.2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+
 	<developers>
 		<developer>
 			<id>thomas.wenzlaff</id>
 			<name>Thomas Wenzlaff</name>
 			<email>gesundheitskarte@wenzlaff.de</email>
-
 			<roles>
 				<role>Java Architekt</role>
 				<role>Java Entwickler</role>
@@ -39,9 +65,18 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.8</jdk.version>
-		<junit.version>4.12</junit.version>
+		<jdk.version>19</jdk.version>
+		<junit.version>4.13.2</junit.version>
+		<junit.jupiter.version>5.11.2</junit.jupiter.version>
+		<junit.vintage.version>5.11.2</junit.vintage.version>
+		<junit.platform.version>5.11.2</junit.platform.version>
 	</properties>
+
+	<scm>
+		<connection>scm:git:git@github.com:IT-Berater/twflug.git</connection>
+		<developerConnection>scm:git:git@github.com:IT-Berater/twflug.git</developerConnection>
+		<url>https://github.com/IT-Berater/twflug</url>
+	</scm>
 
 	<dependencies>
 		<dependency>
@@ -115,18 +150,47 @@
 			<artifactId>json</artifactId>
 			<version>20140107</version>
 		</dependency>
-		<!-- aus dem lokalen Repo -->
 		<dependency>
-			<groupId>thingspeak</groupId>
-			<artifactId>thingspeak</artifactId>
-			<version>1.1.1</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<finalName>twflug</finalName>
-		<plugins>			
+		<plugins>
+<!-- Maven Central 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>3.2.7</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+-->
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.6.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+					<autoPublish>true</autoPublish>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -140,7 +204,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.1</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
@@ -163,8 +227,6 @@
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 					</archive>
-					<exclusions>
-					</exclusions>
 				</configuration>
 			</plugin>
 
@@ -179,7 +241,7 @@
 						<goals>
 							<goal>copy-dependencies</goal>
 						</goals>
-						<configuration>						
+						<configuration>
 							<includeScope>runtime</includeScope>
 							<outputDirectory>${project.build.directory}/lib/</outputDirectory>
 						</configuration>
@@ -205,46 +267,103 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>license-maven-plugin</artifactId>
-					<version>1.8</version>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<version>1.8</version>
 
-					<configuration>				
-						<licenseName>apache_v2</licenseName>						
-						<roots>
-							<root>src/main/java</root>
-							<root>src/main/resources</root>
-							<root>src/test</root>
-						</roots>
-					
-						<useMissingFile>true</useMissingFile>
-		
-						<licenseMerges> <licenseMerge>Apache License, Version 2.0|The 
-							Apache Software License, Version 2.0</licenseMerge> </licenseMerges>
-					</configuration>
+				<configuration>
+					<licenseName>apache_v2</licenseName>
+					<roots>
+						<root>src/main/java</root>
+						<root>src/main/resources</root>
+						<root>src/test</root>
+					</roots>
 
-					<executions>
-						<execution>
-							<id>first</id>
-							<goals>
-								<!-- updates the source's headers according to the specified license -->
-								<!-- <goal>update-file-header</goal> -->
+					<useMissingFile>true</useMissingFile>
 
-								<!-- Adds the full-blown licensefile to the final product -->
-								<!-- <goal>update-project-license</goal> -->
+					<licenseMerges>
+						<licenseMerge>Apache License, Version 2.0|The
+							Apache Software License, Version 2.0</licenseMerge>
+					</licenseMerges>
+				</configuration>
 
-								<!-- generate and add a list of third-party licenses -->
-								<!-- <goal>add-third-party</goal> -->
-							</goals>
-							<phase>process-sources</phase>
-						</execution>
-					</executions>
-				</plugin>
+				<executions>
+					<execution>
+						<id>first</id>
+						<goals>
+							<!-- updates the source's headers according to the specified license -->
+							<!-- <goal>update-file-header</goal> -->
+
+							<!-- Adds the full-blown licensefile to the final product -->
+							<!-- <goal>update-project-license</goal> -->
+
+							<!-- generate and add a list of third-party licenses -->
+							<!-- <goal>add-third-party</goal> -->
+						</goals>
+						<phase>process-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<check />
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+					</formats>
+					<check />
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 	<reporting>
 		<plugins>
 			<plugin>
