@@ -2,16 +2,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>de.wenzlaff.twflug</groupId>
 	<artifactId>de.wenzlaff.twflug</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 	<packaging>jar</packaging>
-
 	<name>twflug</name>
 	<url>http://www.wenzlaff.info</url>
 	<description>TWFlug Anwendung zum anzeigen der Menge der Flugzeuge</description>
-
 	<inceptionYear>2015</inceptionYear>
 
 	<distributionManagement>
@@ -36,7 +33,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
 
 	<developers>
 		<developer>
@@ -93,12 +89,12 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>2.17.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
-			<version>1.2</version>
+			<version>1.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.jcraft</groupId>
@@ -108,12 +104,12 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.1</version>
+			<version>3.0.0-beta2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.1</version>
+			<version>3.0.0-beta2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
@@ -123,7 +119,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.3.1</version>
+			<version>2.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mashape.unirest</groupId>
@@ -133,22 +129,22 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.6</version>
+			<version>4.5.14</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpasyncclient</artifactId>
-			<version>4.0.2</version>
+			<version>4.1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
-			<version>4.3.6</version>
+			<version>4.5.14</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20140107</version>
+			<version>20210307</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -204,7 +200,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.13.0</version>
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
@@ -215,7 +211,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.4.1</version>
 				<configuration>
 					<excludes>
 						<exclude>**/log4j2.xml</exclude>
@@ -233,7 +229,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>3.7.0</version>
 				<executions>
 					<execution>
 						<id>copy-dependencies</id>
@@ -251,7 +247,7 @@
 
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.5.2</version>
+				<version>3.7.1</version>
 				<configuration>
 					<descriptors>
 						<descriptor>zip.xml</descriptor>
@@ -272,7 +268,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>license-maven-plugin</artifactId>
 				<version>1.8</version>
-
 				<configuration>
 					<licenseName>apache_v2</licenseName>
 					<roots>
@@ -280,31 +275,12 @@
 						<root>src/main/resources</root>
 						<root>src/test</root>
 					</roots>
-
 					<useMissingFile>true</useMissingFile>
-
 					<licenseMerges>
 						<licenseMerge>Apache License, Version 2.0|The
 							Apache Software License, Version 2.0</licenseMerge>
 					</licenseMerges>
 				</configuration>
-
-				<executions>
-					<execution>
-						<id>first</id>
-						<goals>
-							<!-- updates the source's headers according to the specified license -->
-							<!-- <goal>update-file-header</goal> -->
-
-							<!-- Adds the full-blown licensefile to the final product -->
-							<!-- <goal>update-project-license</goal> -->
-
-							<!-- generate and add a list of third-party licenses -->
-							<!-- <goal>add-third-party</goal> -->
-						</goals>
-						<phase>process-sources</phase>
-					</execution>
-				</executions>
 			</plugin>
 
 			<plugin>
@@ -319,11 +295,10 @@
 					<check />
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -336,7 +311,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -344,10 +319,7 @@
 							<goal>jar</goal>
 						</goals>
 					</execution>
-				</executions>
-				<configuration>
-					<additionalparam>-Xdoclint:none</additionalparam>
-				</configuration>
+				</executions>			
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -363,97 +335,18 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<reporting>
 		<plugins>
 			<plugin>
-				<artifactId>maven-site-plugin</artifactId>
-				<configuration>
-					<outputEncoding>UTF-8</outputEncoding>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<minmemory>128m</minmemory>
-					<maxmemory>512m</maxmemory>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<configLocation>tw-checkstyle.xml</configLocation>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<configuration>
-					<linkXref>true</linkXref>
-					<minimumTokens>100</minimumTokens>
-					<targetJdk>1.5</targetJdk>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<configuration>
-					<aggregate>true</aggregate>
-					<javadocDir>target/site/api/</javadocDir>
-					<linkJavadoc>true</linkJavadoc>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
 				<reportSets>
 					<reportSet>
 						<reports>
-							<report>license</report>
-							<report>index</report>
-							<report>project-team</report>
-							<report>dependencies</report>
-							<report>mailing-list</report>
-							<report>cim</report>
+							<report>report</report>
 						</reports>
 					</reportSet>
 				</reportSets>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jdepend-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>taglist-maven-plugin</artifactId>
-				<configuration>
-					<tags>
-						<tag>TODO</tag>
-						<tag>FIXME</tag>
-						<tag>@todo</tag>
-						<tag>@deprecated</tag>
-						<tag>TW:</tag>
-					</tags>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-				</configuration>
 			</plugin>
 		</plugins>
 	</reporting>
